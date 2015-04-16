@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8BD8D657-F0FA-4D24-99B7-B7669E6063C3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OmrMarkEngine.Core</RootNamespace>
+    <AssemblyName>OmrMarkEngine.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging, Version=2.2.5.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging.Formats, Version=2.2.4.0, Culture=neutral, PublicKeyToken=8065ed5a639199a0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\AForge.Imaging.Formats.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\AForge.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="FyfeSoftware.Sketchy.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\FyfeSoftware.Sketchy.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.WIA">
+      <HintPath>..\Solution Items\Interop.WIA.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="zxing">
+      <HintPath>..\Solution Items\zxing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Output\OmrBarcodeData.cs" />
+    <Compile Include="Output\OmrBubbleData.cs" />
+    <Compile Include="Output\OmrOutputDataCollection.cs" />
+    <Compile Include="Output\OmrOutputData.cs" />
+    <Compile Include="Output\OmrPageOutputCollection.cs" />
+    <Compile Include="Output\OmrRowData.cs" />
+    <Compile Include="Output\OmrPageOutput.cs" />
+    <Compile Include="Output\OmrScanOutcome.cs" />
+    <Compile Include="Output\ValidationResult.cs" />
+    <Compile Include="Wia\ScanCompletedEventArgs.cs" />
+    <Compile Include="Wia\ScanEngine.cs" />
+    <Compile Include="Wia\ScannerInfo.cs" />
+    <Compile Include="Template\OmrBarcodeField.cs" />
+    <Compile Include="Template\OmrBoundObject.cs" />
+    <Compile Include="Template\OmrBubbleContainer.cs" />
+    <Compile Include="Template\OmrBubbleField.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="Template\OmrIdentifiedObject.cs" />
+    <Compile Include="Template\OmrQuestionField.cs" />
+    <Compile Include="Template\OmrTemplate.cs" />
+    <Compile Include="Template\OmrTrueFalseField.cs" />
+    <Compile Include="Processor\ScannedImage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Template\Design\BackgroundImageShape.cs" />
+    <Compile Include="Template\Design\BarcodeFormFieldStencil.cs" />
+    <Compile Include="Template\Design\BubbleFormFieldStencil.cs" />
+    <Compile Include="Template\Design\CornerAnchorStencil.cs" />
+    <Compile Include="Wia\WIAConstants.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Template\Resources\view-barcode.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

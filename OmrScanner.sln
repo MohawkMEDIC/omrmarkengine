@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateDesigner", "ScannerTemplate\TemplateDesigner.csproj", "{C1D4C173-EFC0-4E74-B4AC-FB6ACD01BBF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmrMarkEngine.Core", "MarkEngine.Core\OmrMarkEngine.Core.csproj", "{8BD8D657-F0FA-4D24-99B7-B7669E6063C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmrScannerApplication", "OmrScannerApplication\OmrScannerApplication.csproj", "{A32C8B82-83B2-4B84-BA12-3B3BC04C44A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1D4C173-EFC0-4E74-B4AC-FB6ACD01BBF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1D4C173-EFC0-4E74-B4AC-FB6ACD01BBF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1D4C173-EFC0-4E74-B4AC-FB6ACD01BBF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1D4C173-EFC0-4E74-B4AC-FB6ACD01BBF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BD8D657-F0FA-4D24-99B7-B7669E6063C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BD8D657-F0FA-4D24-99B7-B7669E6063C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BD8D657-F0FA-4D24-99B7-B7669E6063C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BD8D657-F0FA-4D24-99B7-B7669E6063C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A32C8B82-83B2-4B84-BA12-3B3BC04C44A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32C8B82-83B2-4B84-BA12-3B3BC04C44A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32C8B82-83B2-4B84-BA12-3B3BC04C44A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A32C8B82-83B2-4B84-BA12-3B3BC04C44A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

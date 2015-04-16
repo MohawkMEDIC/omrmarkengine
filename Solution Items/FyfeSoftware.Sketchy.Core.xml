@@ -1,0 +1,1625 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FyfeSoftware.Sketchy.Core</name>
+    </assembly>
+    <members>
+        <member name="T:FyfeSoftware.Sketchy.Core.Collections.CollectionModificationType">
+            <summary>
+            Identifies the type of modification
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Collections.CollectionModifiedEventArgs">
+            <summary>
+            Idenfies changes in the shape collection
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Collections.CollectionModifiedEventArgs.#ctor(FyfeSoftware.Sketchy.Core.Collections.CollectionModificationType,FyfeSoftware.Sketchy.Core.IShape[])">
+            <summary>
+            Constructor for the modification event args
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Collections.CollectionModifiedEventArgs.ModificationType">
+            <summary>
+            The type of modification that occurred
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Collections.CollectionModifiedEventArgs.Items">
+            <summary>
+            Shapes added or removed from the collection
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection">
+            <summary>
+            Represents a collection of shapes
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.m_internalCollection">
+            <summary>
+            The internal collection of shapes
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.AddRange(System.Collections.Generic.IEnumerable{FyfeSoftware.Sketchy.Core.IShape})">
+            <summary>
+            Add all items at once to the list
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.Add(FyfeSoftware.Sketchy.Core.IShape)">
+            <summary>
+            Add a shape to the collection
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.Clear">
+            <summary>
+            Clear this shape collection
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.Contains(FyfeSoftware.Sketchy.Core.IShape)">
+            <summary>
+            Returns true if the currnet collection contains <paramref name="item"/>
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.CopyTo(FyfeSoftware.Sketchy.Core.IShape[],System.Int32)">
+            <summary>
+            Copy this collection of shapes to an array of shapes
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.Remove(FyfeSoftware.Sketchy.Core.IShape)">
+            <summary>
+            Remove <paramref name="item"/> from this collection
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.GetEnumerator">
+            <summary>
+            Get the genericized enumerator for this collection
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Get the non-genericized enumerator for this collection
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.CollectionModified">
+            <summary>
+            Fired when the collection has been modified
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.Count">
+            <summary>
+            Gets the count of shapes in this collection
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Collections.ShapeCollection.IsReadOnly">
+            <summary>
+            Gets whether this collection is a readonly collection
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.ComponentModel.ShapeSite">
+            <summary>
+            The shape site implements the ISite interface to link components to a container
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ComponentModel.ShapeSite.#ctor">
+            <summary>
+            Creates a new instance of the ShapeSite
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ComponentModel.ShapeSite.#ctor(System.ComponentModel.IContainer,System.ComponentModel.IComponent)">
+            <summary>
+            Creates a new instance of the ShapeSite site with the specified
+            <paramref name="container"/> and <paramref name="component"/>
+            </summary>
+            <param name="container">The container that encapsulates the component</param>
+            <param name="component">The component that is being encapsulated</param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ComponentModel.ShapeSite.GetService(System.Type)">
+            <summary>
+            Get s service from the container. 
+            </summary>
+            <remarks>This container does not implement a get service method</remarks>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ComponentModel.ShapeSite.Component">
+            <summary>
+            Gets the component (source) of this site association
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ComponentModel.ShapeSite.Container">
+            <summary>
+            Gets the container (target) of this site association
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ComponentModel.ShapeSite.DesignMode">
+            <summary>
+            Gets a value that tells the component if the container is in design mode
+            </summary>
+            <remarks>Since Sketchy is a drawing framework, this always returns true</remarks>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ComponentModel.ShapeSite.Name">
+            <summary>
+            Gets or sets the name of the site
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Decorators.DropDecorator">
+            <summary>
+            The drop decorator represents a decorator that is used to illustrate the fact that one shape can be
+            dropped onto another
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IDecorator">
+            <summary>
+            An IDecorator is a special shape that 
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IDrawable">
+            <summary>
+            Identifies an object that is drawable on the screen. 
+            <para>A drawable object can be anything from a text box, to a full shape</para>
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IDrawable.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Instructs the drawable object to draw itself to the specified graphics object.
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IDecorator.Decorates">
+            <summary>
+            Gets the object that this item decorates
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.DropDecorator.m_decorates">
+            <summary>
+            The shape that this decorator decorates
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.DropDecorator.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw this decorator to <paramref name="g"/>
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.DropDecorator.Dispose">
+            <summary>
+            Dispose this decorator
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Decorators.DropDecorator.Decorates">
+            <summary>
+            Gets or Sets the shape that this decorator decorates
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Decorators.DropDecorator.Disposed">
+            <summary>
+            Event is raised when this component is disposed
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Decorators.DropDecorator.Site">
+            <summary>
+            Gets or sets the site of this component
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator">
+            <summary>
+            A selection decorator is a special decorator that outlines the current object
+            with a dashed line and grab handles
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IMouseInteractiveShape">
+            <summary>
+            Represents an shape that the user can interact with using the mouse
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IMouseInteractive">
+            <summary>
+            An IMouseInteractive object is an object that the user can use the mouse to interact with
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IMouseInteractive.HandleMouseClick(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse click event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IMouseInteractive.HandleMouseDown(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse down event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IMouseInteractive.HandleMouseUp(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse up event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IMouseInteractive.HandleMouseMove(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse move event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IMouseInteractive.HandleDoubleClick(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse double click event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IMouseInteractive.HandleMouseDwell(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse dwell event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IMouseInteractiveShape.HitTest(System.Drawing.Point)">
+            <summary>
+            A hit test is used to determine if the specified point is within the bounds
+            of the current shape/
+            </summary>
+            <remarks>Used for determining if a mouse click happens in the context of the current
+            shape</remarks>
+            <param name="p">The point that is being tested</param>
+            <returns>True if point <paramref name="p"/> lies within the boundaries of this shape</returns>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IMouseInteractiveShape.HandleMouseLeave(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse leave the item
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IMouseInteractiveShape.HandleMouseEnter(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse enter event 
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.m_connectorLines">
+            <summary>
+            Gets or sets the additional handles that should be drawn for this decorator
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.m_currentEditing">
+            <summary>
+            Currently editing connector line
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.m_gripHandles">
+            <summary>
+            Grip handles
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.m_currentState">
+            <summary>
+            The current state of the decorator (moving, idle, etc...)
+            </summary>
+            TODO: Create an enum for this
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.m_currentSizeGrip">
+            <summary>
+            Current sizing direction
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.m_mouseDownAt">
+            <summary>
+            The point where the mouse was first depressed 
+            </summary>
+            <remarks>Relative to the client</remarks>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.m_decoratesOriginalPosition">
+            <summary>
+            The original position of the decorated shape
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.m_currentDropShape">
+            <summary>
+            The current drop shape
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.m_decorates">
+            <summary>
+            The shape that this decorator decorates
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.AddConnectorLine(FyfeSoftware.Sketchy.Core.IConnector)">
+            <summary>
+            Add a grip to 
+            </summary>
+            <param name="shape"></param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw this decorator to the specified graphics surface
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.HitTest(System.Drawing.Point)">
+            <summary>
+            False if this item is not in the hit test
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.HandleMouseLeave(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse leaving the selection decorator area
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.HandleMouseEnter(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse entering the selection decorator area
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.HandleMouseClick(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse clicking on the selection decorator area
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.HandleMouseDown(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse key being depressed
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.HandleMouseUp(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse up event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.HandleMouseMove(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse move event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.ResizeDecoratesObject(System.Drawing.Point)">
+            <summary>
+            Resize the object that this decorator decorates
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CallDragEvents(System.Drawing.Point)">
+            <summary>
+            Call any drag events on this object
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.HandleDoubleClick(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle double click
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.HandleMouseDwell(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the dwell
+            </summary>
+            <param name="p"></param>
+            <param name="mouseKeys"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.Dispose">
+            <summary>
+            Dispose this object from memory
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.SiblingSelected">
+            <summary>
+            Gets or sets a pointer to the shape collection that contains all the selected objects 
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.Decorates">
+            <summary>
+            Gets or Sets the shape that this decorator decorates
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.Disposed">
+            <summary>
+            Fired when this item is disposed
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.Site">
+            <summary>
+            Gets or sets the site that this decorator is comprised of
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.SizeState">
+            <summary>
+            Identifies the state of the size decorator
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip">
+            <summary>
+            The current size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.None">
+            <summary>
+            No size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.TopLeft">
+            <summary>
+            Top left size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.Top">
+            <summary>
+            Top size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.TopRight">
+            <summary>
+            Top right size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.Left">
+            <summary>
+            Middle left size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.Right">
+            <summary>
+            Middle right size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.BotLeft">
+            <summary>
+            Bottom left size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.Bot">
+            <summary>
+            Bottom size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.BotRight">
+            <summary>
+            Bottom right size grip
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Decorators.SelectionDecorator.CurrentSizeGrip.Connector">
+            <summary>
+            Connector size grip
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.ICanvas">
+            <summary>
+            A Canvas is a container for shape and stencil instances. The shape and stencil 
+            instances participate in the canvas container.
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ICanvas.SendShapeToBack(FyfeSoftware.Sketchy.Core.IShape)">
+            <summary>
+            Send a shape to the back of the drawing stack
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ICanvas.BringShapeToFront(FyfeSoftware.Sketchy.Core.IShape)">
+            <summary>
+            Send the specified shape to the front of the drawing stack
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ICanvas.FindShapeAt(System.Drawing.Point,System.Predicate{FyfeSoftware.Sketchy.Core.IShape})">
+            <summary>
+            Find a shape at a particular position
+            </summary>
+            <param name="p">The point to locate the shape at</param>
+            <param name="predicate">The predicate used to match the shapes</param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ICanvas.FindShape(System.String)">
+            <summary>
+            Find a named shape
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ICanvas.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw the contents within <paramref name="viewWindow"/> of this canvas to <paramref name="g"/>
+            </summary>
+            <param name="g">The graphics context to draw to</param>
+            <param name="viewWindow">The window to draw to</param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ICanvas.Invalidate">
+            <summary>
+            Invalidate the canvas forcing a redraw
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.ICanvas.Clear">
+            <summary>
+            Clear the canvas
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.ICanvas.SizeChanged">
+            <summary>
+            Fired when the size of the canvas is changed
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ICanvas.Zoom">
+            <summary>
+            Gets or sets the zoom factor of the canvas
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ICanvas.Size">
+            <summary>
+            The size of the canvas
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ICanvas.MinSize">
+            <summary>
+            Gets or sets the minimum size of this canvas
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.ICanvas.RedrawRequired">
+            <summary>
+            Signals to parent controls that a redraw of this component is required
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.ICanvas.ShapeAdded">
+            <summary>
+            Signals that a child shape has been added to the canvas
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.ICanvas.ShapeRemoved">
+            <summary>
+            Signals that a child shape has been removed from the canvas
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.DirectionType">
+            <summary>
+            Directions that a connector can be facing
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.DirectionType.North">
+            <summary>
+            The connector is facing north
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.DirectionType.East">
+            <summary>
+            The connector is facing east
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.DirectionType.South">
+            <summary>
+            The connector is facing south
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.DirectionType.West">
+            <summary>
+            The connector is facing west
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IConnector">
+            <summary>
+            An IConnector represents an  object that connects one or more
+            <see cref="T:IShape"/> instances together
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IConnector.IsConnectionAllowed(FyfeSoftware.Sketchy.Core.IShape,FyfeSoftware.Sketchy.Core.IShape)">
+            <summary>
+            Determines if the connector configuration is allowed
+            </summary>
+            <param name="source">The source of the connection</param>
+            <param name="target">The target of the connection</param>
+            <returns>True if the connection is possible</returns>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IConnector.RecalculatePosition">
+            <summary>
+            Allows the connector to recalculate its position
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IConnector.Target">
+            <summary>
+            The target of the connector
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IConnector.Source">
+            <summary>
+            The source of the connector
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IConnector.Direction">
+            <summary>
+            The direction of this connector
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.IConnector.ConnectionChanged">
+            <summary>
+            Fired when the connection changes
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IDecoratableShape">
+            <summary>
+            Identifies a shape that can be decorated
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IShape">
+            <summary>
+            A shape represents an abstract object that is placed onto the canvas and drawn 
+            when the canvas is rendered. A shape is most usually a primitive shape (like a circle,
+            square, rectangle, etc..)
+            </summary>
+            <remarks>A <see cref="T:IStencil"/> represents a collection of shapes that
+            make up a complex shape on the screen</remarks>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShape.GetCanvas">
+            <summary>
+            Get the canvas this shape is present in
+            </summary>
+            <remarks>Exists because shapes can be nested within each other</remarks>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShape.PointToClientZoom(System.Drawing.Point)">
+            <summary>
+            Convert the point <paramref name="p"/> form a global canvas position to a client position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShape.PointToClientZoom(System.Drawing.PointF)">
+            <summary>
+            Convert the point <paramref name="p"/> form a global canvas position to a client position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShape.PointToClient(System.Drawing.Point)">
+            <summary>
+            Convert the point <paramref name="p"/> form a global canvas position to a client position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShape.PointToClient(System.Drawing.PointF)">
+            <summary>
+            Convert the point <paramref name="p"/> form a global canvas position to a client position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShape.PointToCanvas(System.Drawing.PointF)">
+            <summary>
+            Convert the point <paramref name="p"/> from a client position to a global canvas position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShape.PointToCanvas(System.Drawing.Point)">
+            <summary>
+            Convert the point <paramref name="p"/> from a client position to a global canvas position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShape.PointToCanvasZoom(System.Drawing.PointF)">
+            <summary>
+            Conver the point <paramref name="p"/> from a client position to a global canvas position taking zoom into account
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShape.OnRedrawRequired">
+            <summary>
+            Fires the redraw required event
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IShape.Tag">
+            <summary>
+            Arbritrary tagged data
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IShape.Position">
+            <summary>
+            Gets or sets the position of the shape within the drawing canvas
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IShape.Size">
+            <summary>
+            Gets or sets the size of the shape on the drawing canvas
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IShape.DrawSize">
+            <summary>
+            Gets the size of the shap on the canvas (includes zoom)
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IShape.DrawPosition">
+            <summary>
+            Gets the position on the canvas that this shape should be drawn at (includes zoom)
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IShape.AllowedSizing">
+            <summary>
+            Gets the lock on this shape's size
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.IShape.RedrawRequired">
+            <summary>
+            Event is fired when the current shape needs to be refreshed
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.IShape.SizeChanged">
+            <summary>
+            Size has been changed
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.IShape.PositionChanged">
+            <summary>
+            Position has been changed
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IDecoratableShape.Decorator">
+            <summary>
+            Gets or sets the current decorator for this object. A decorator is a 
+            class that "decorates" this class when the user interacts with the shape
+            via a mouse hover, or click event. Interactive shapes may call the Decorator's
+            DrawTo function to decorate the shape.
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.DragEffect">
+            <summary>
+            Identifies the effect to show to the user
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IDroppableShape">
+            <summary>
+            Represents a shape that can have other shapes dropped onto it
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IDroppableShape.HandleDragOver(FyfeSoftware.Sketchy.Core.IShape,System.Drawing.Point)">
+            <summary>
+            Handles a scenario when another IDraggableShape instance is dragged over 
+            the current instance
+            </summary>
+            <param name="p">The point where the shape is being dragged (relative to the current shape)</param>
+            <param name="shape">The shape that is being dragged over this object</param>
+            <returns>The effect to show to the user</returns>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IDroppableShape.HandleDrop(FyfeSoftware.Sketchy.Core.IShape,System.Drawing.Point)">
+            <summary>
+            Called by the canvas when <paramref name="shape"/> has been dropped onto the current
+            instance at <paramref name="p"/>
+            </summary>
+            <param name="shape">The shape that was dropped onto this shape</param>
+            <param name="p">The point within the current shape where <paramref name="shape"/> was dropped</param>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IEditableShape">
+            <summary>
+            Represents a shape that can be modified by the user after it has been placed onthe
+            canvas
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IEditableShape.HandleEndEdit(FyfeSoftware.Sketchy.Core.ShapeEditEventArgs)">
+            <summary>
+            Called by the canvas after the edit has been accepted by the user
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IEditableShape.Editor">
+            <summary>
+            Gets or sets a class that should be used when editing the data contained in
+            this editor
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IInteractiveShape">
+            <summary>
+            Represents a shape that the user can interact with. The IInteractiveShape interface 
+            is a shape that the user can click, move, delete, and edit.
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.MouseKeys">
+            <summary>
+            Represents the mouse buttons that are pressed
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.SizeModeType.None">
+            <summary>
+            No sizing or moving
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.SizeModeType.Horizontal">
+            <summary>
+            The size on the horizontal axis is locked
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.SizeModeType.Vertical">
+            <summary>
+            The size on the vertical axis is locked
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.SizeModeType.MoveOnly">
+            <summary>
+            Don't show grip handles
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.SizeModeType.LineMode">
+            <summary>
+            Only the Position and Position + Size grip handles
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IShapeEditor">
+            <summary>
+            The IShapeEditor interface allows the developer of an editable shape to 
+            specify a custom editor for the shape
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShapeEditor.EditShape(FyfeSoftware.Sketchy.Core.IEditableShape)">
+            <summary>
+            Edit <paramref name="shape"/>
+            </summary>
+            <param name="shape">The shape to be edited</param>
+            <returns>A state object that is to be interpreted by the shape object</returns>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IStencil">
+            <summary>
+            A stencil represents a collection of primitive <see cref="T:IShape"/> objects that 
+            represent a cohesive modelling concept. An example of a stencil would be the "class"
+            shape in UML
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IStencil.BoundingBox">
+            <summary>
+            Gets the calculated bounding box for the stencil
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.IStencil.ShapeAdded">
+            <summary>
+            Signals that a child shape has been added to the canvas
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.IStencil.ShapeRemoved">
+            <summary>
+            Signals that a child shape has been removed from the canvas
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas">
+            <summary>
+            Represents an abstract implementation of a canvas. This serves as a basis for 
+            deriving custom canvases.
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.m_size">
+            <summary>
+            The current size of the canvas
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.m_pendingRedraw">
+            <summary>
+            True if a redraw is going to occur
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.m_zoom">
+            <summary>
+            The current zoom level of the canvas
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.Invalidate">
+            <summary>
+            Invalidate
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.Clear">
+            <summary>
+            Clear the canvas
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.m_shapeComponents">
+            <summary>
+            The components in this canvas
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.SendShapeToBack(FyfeSoftware.Sketchy.Core.IShape)">
+            <summary>
+            Send the specified shape to the back 
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.BringShapeToFront(FyfeSoftware.Sketchy.Core.IShape)">
+            <summary>
+            Bring the specified shape to the front
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw the contents of this canvas to <paramref name="g"/> using the viewport <paramref name="viewWindow"/>
+            </summary>
+            <param name="g">The graphics construct to draw to</param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.FindShape(System.String)">
+            <summary>
+            Find a named shape
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.FindShapeAt(System.Drawing.Point)">
+            <summary>
+            Find a shape at the specified point
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.FindShapeAt(System.Drawing.Point,System.Predicate{FyfeSoftware.Sketchy.Core.IShape})">
+            <summary>
+            Locates a shape where the HitTest returns true at the specified point
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.Add(System.ComponentModel.IComponent,System.String)">
+            <summary>
+            Add a component to the canvas
+            </summary>
+            <param name="component">The component to add</param>
+            <param name="name">A unique identifier for the component</param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.AbstractCanvas_RedrawRequired(System.Object,System.EventArgs)">
+            <summary>
+            Handles the redraw required events coming from shapes on the canvas
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.OnRedrawRequired">
+            <summary>
+            Fires the redraw required event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.Add(System.ComponentModel.IComponent)">
+            <summary>
+            Add a component to the canvas
+            </summary>
+            <param name="component">The component to add</param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.Remove(System.ComponentModel.IComponent)">
+            <summary>
+            Remove <paramref name="component"/> from the canvas
+            </summary>
+            <param name="component">The component to remove from the canvas</param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.Dispose">
+            <summary>
+            Dispose this canvas
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.HandleMouseClick(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse click event at the specified point
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.HandleMouseDown(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse down event at the specified point
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.HandleMouseUp(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse up event at the specified point
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.HandleMouseMove(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse movement event at the specified point
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.HandleDoubleClick(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse double click event at the specified point
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.HandleMouseDwell(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse dwell event at the specified point
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.Zoom">
+            <summary>
+            Get or set the zoom of this canvas
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.SizeChanged">
+            <summary>
+            Fired when the size of the canvas is changed
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.MinSize">
+            <summary>
+            Gets or sets the minimum size of this canvas
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.Size">
+            <summary>
+            Gets or sets the size of the canvas
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.ShapeAdded">
+            <summary>
+            Signal that a shape has been added
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.ShapeRemoved">
+            <summary>
+            Signal that a shape has been removed
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.RedrawRequired">
+            <summary>
+            Signals that a redraw needs to be performed on this canvas
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractCanvas.Components">
+            <summary>
+            Gets the collection of components that are currently on this canvas
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil">
+            <summary>
+            Represents an abstract interactive stencil
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil">
+            <summary>
+            Represents an abstract stencil object
+            </summary>
+            <remarks>You can think of a stencil as a "mini" canvas. The only difference is
+            that a stencil's add and remove component methods do not trigger a redraw 
+            as the stencil's draw method will iterate through the shapes when
+            it needs to be redrawn.</remarks>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape">
+            <summary>
+            Ths AbstractRectangleShape partially implements the IShape class to represent a
+            shape on the user's screen
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.m_position">
+            <summary>
+            Position of this item in the canvas space
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.m_size">
+            <summary>
+            Size of the this shape in the canvas space
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.PointToClientZoom(System.Drawing.Point)">
+            <summary>
+            Conver the point <paramref name="p"/> form a canvas to a client position factoring zoom
+            </summary>
+            <remarks>Converts a point that is relative to canvas 0,0 to a point that is relative to this
+            shape's position</remarks>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.PointToClientZoom(System.Drawing.PointF)">
+            <summary>
+            Conver the point <paramref name="p"/> form a canvas to a client position factoring zoom
+            </summary>
+            <remarks>Converts a point that is relative to canvas 0,0 to a point that is relative to this
+            shape's position</remarks>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.PointToClient(System.Drawing.Point)">
+            <summary>
+            Conver the point <paramref name="p"/> form a canvas to a client position
+            </summary>
+            <remarks>Converts a point that is relative to canvas 0,0 to a point that is relative to this
+            shape's position</remarks>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.PointToClient(System.Drawing.PointF)">
+            <summary>
+            Conver the point <paramref name="p"/> form a canvas to a client position
+            </summary>
+            <remarks>Converts a point that is relative to canvas 0,0 to a point that is relative to this
+            shape's position</remarks>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.PointToCanvas(System.Drawing.Point)">
+            <summary>
+            Convert the point <paramref name="p"/> form a client position to a canvas position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.PointToCanvas(System.Drawing.PointF)">
+            <summary>
+            Convert the point <paramref name="p"/> form a client position to a canvas position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.PointToCanvasZoom(System.Drawing.PointF)">
+            <summary>
+            Convert the point <paramref name="p"/> form a client position to a canvas position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.OnRedrawRequired">
+            <summary>
+            Fires the redraw required event
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.GetCanvas">
+            <summary>
+            Get the canvas this shape belongs to
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draws this shape to the specified graphics device
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.Dispose">
+            <summary>
+            Dispose of this shape
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.Position">
+            <summary>
+            Gets or sets the position of the top-left corner of the shape
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.Size">
+            <summary>
+            Gets or sets the size of the shape
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.AllowedSizing">
+            <summary>
+            Gets the lock on the shape's size
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.RedrawRequired">
+            <summary>
+            Fires an event that informs the canvas that a redraw is required
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.SizeChanged">
+            <summary>
+            The size has been changed
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.PositionChanged">
+            <summary>
+            The position has been changed
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.Tag">
+            <summary>
+            Tagged data
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.DrawSize">
+            <summary>
+            Gets the size this shape will drawn on the canvas including zoom
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.DrawPosition">
+            <summary>
+            Gets the position this shape will drawn on the canvas including zoom
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.Disposed">
+            <summary>
+            The disposed event handler
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractShape.Site">
+            <summary>
+            Gets or sets the site (canvas site usually) that links this shape to a canvas
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.m_shapeComponents">
+            <summary>
+            Shape components for this stencil shape
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.OnResize(System.Drawing.SizeF)">
+            <summary>
+            This abstract stencil has been resized
+            </summary>
+            <remarks>The default version of this method just scales everything up by the 
+            precentage calculated</remarks>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Override the draw method
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.Add(System.ComponentModel.IComponent,System.String)">
+            <summary>
+            Add a component to this stencil
+            </summary>
+            <param name="component">The component to add</param>
+            <param name="name">A unique identifier for the component</param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.Add(System.ComponentModel.IComponent)">
+            <summary>
+            Add a component to the canvas
+            </summary>
+            <param name="component">The component to add</param>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.Remove(System.ComponentModel.IComponent)">
+            <summary>
+            Remove <paramref name="component"/> from the canvas
+            </summary>
+            <param name="component">The component to remove from the canvas</param>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.Size">
+            <summary>
+            Gets or sets the size of the stencil
+            </summary>
+            <remarks>Overidden so we can re-calc the stencil's child components' size
+            and positions within this object</remarks>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.AllowedSizing">
+            <summary>
+            Do not allow sizing of stencils by default
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.BoundingBox">
+            <summary>
+            Gets the bounding box for this particular stencil object
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.Components">
+            <summary>
+            Gets the collection of components that are currently on this canvas
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.ShapeAdded">
+            <summary>
+            Signal that a shape has been added
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Primitives.AbstractStencil.ShapeRemoved">
+            <summary>
+            Signal that a shape has been removed
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.m_decorator">
+            <summary>
+            A shape that decorates this shape
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleDragOver(FyfeSoftware.Sketchy.Core.IShape,System.Drawing.Point)">
+            <summary>
+            Handle the event that occurs when a shape is dragged over this shape
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleDrop(FyfeSoftware.Sketchy.Core.IShape,System.Drawing.Point)">
+            <summary>
+            Handle the event that occurs when a shape is dropped onto this shape
+            </summary>
+            <remarks>Default action is no action</remarks>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleEndEdit(FyfeSoftware.Sketchy.Core.ShapeEditEventArgs)">
+            <summary>
+            Handle the event that occurs when the user is finished editing
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HitTest(System.Drawing.Point)">
+            <summary>
+            Perform a hit test on this object
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleMouseLeave(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse leaving the object
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleMouseEnter(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse entering this object
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleMouseClick(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a mouse clicking the object
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleMouseDown(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse being depressed on this object
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleMouseUp(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse being released on this object
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleMouseMove(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse moving on this object
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleDoubleClick(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle a double click event on this object
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.HandleMouseDwell(System.Drawing.Point,FyfeSoftware.Sketchy.Core.MouseKeys)">
+            <summary>
+            Handle the mouse dwelling on this object
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.Decorator">
+            <summary>
+            Get or set the decorator 
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Primitives.Stencils.AbstractInteractiveStencil.Editor">
+            <summary>
+            Gets or sets the editor to use for this stencil
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.ShapeEditEventArgs">
+            <summary>
+            Provides data for an Interactive shape. This data includes a state object which represents
+            the data provided by the IEditProvider after the edit has been accepted
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ShapeEditEventArgs.Cancel">
+            <summary>
+            If true, cancels the edit action
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ShapeEditEventArgs.State">
+            <summary>
+            Gets or sets the state object
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.ShapeEditEventArgs.Shape">
+            <summary>
+            The shape that is being edited
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape">
+            <summary>
+            Represents a shape that can be styled in a custom way on the canvas
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.m_outlineColor">
+            <summary>
+            The outline colour of the shape
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.m_fillBrush">
+            <summary>
+            The fill brush of the shape
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.m_outlineStyle">
+            <summary>
+            The outline style of the shape
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.m_outlineWidth">
+            <summary>
+            The outline width of the shape
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.m_shadowBrush">
+            <summary>
+            The brush to use for the shadow
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.ShadowBrush">
+            <summary>
+            Gets or sets the brush to use to draw the shadow
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.OutlineColor">
+            <summary>
+            Gets or sets the colour of the outline
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.FillBrush">
+            <summary>
+            Gets or sets the colour of the fill of the object
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.OutlineStyle">
+            <summary>
+            Gets or sets the outline style of the object
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.AbstractStyledShape.OutlineWidth">
+            <summary>
+            Gets or sets the outline width of the object
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.CanvasSelectionShape">
+            <summary>
+            The canvas selection shape represents a bounding box on the user's screen that indicates
+            the current selection area for the item.
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.CanvasSelectionShape.#ctor(System.Drawing.Point)">
+            <summary>
+            Creates a new instance of the canvas selection shape
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.CanvasSelectionShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw this shape to the specified graphics port
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.CanvasSelectionShape.BindingBox">
+            <summary>
+            Gets the selection binding box
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.CanvasSelectionShape.Size">
+            <summary>
+            Gets or sets the size and calls the appropriate draw event
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.CanvasSelectionShape.DrawSize">
+            <summary>
+            Gets the size this item is drawn (zoom does not apply)
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.CanvasSelectionShape.DrawPosition">
+            <summary>
+            Gets the position this item is drawn at (zoom does not apply)
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.ClosedArrowShape">
+            <summary>
+            A shape the represents a closed arrow
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.ClosedArrowShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw this shape to the graphics
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.ClosedArrowShape.Direction">
+            <summary>
+            Gets or sets the direction of this item
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape">
+            <summary>
+            The arrow shape represents a simple arrow head on a line shape
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.ARROW_HEIGHT">
+            <summary>
+            Define a 10 pixel arrow head height
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.m_sourceShape">
+            <summary>
+            Source shape of the connection
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.m_targetShape">
+            <summary>
+            Target shape of the connection
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.m_decorator">
+            <summary>
+            The decorator that decorates this shape
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw this arrow head to the graphics canvas
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.m_sourceShape_PositionChanged(System.Object,System.EventArgs)">
+            <summary>
+            Position has changed
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.UpdateSizeAndPosition">
+            <summary>
+            Update Size and position
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.IsConnectionAllowed(FyfeSoftware.Sketchy.Core.IShape,FyfeSoftware.Sketchy.Core.IShape)">
+            <summary>
+            Determine if the connection is permitted
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.RecalculatePosition">
+            <summary>
+            Recalculate this position
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.ArrowType">
+            <summary>
+            The arrow type
+            </summary>
+        </member>
+        <member name="E:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.ConnectionChanged">
+            <summary>
+            Fired when the source or target of this connector changes
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.Source">
+            <summary>
+            Gets or sets the target of this connector
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.Target">
+            <summary>
+            Gets or sets the source of this connector
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.ConnectionLineShape.Direction">
+            <summary>
+            Gets or sets the direction this connector is facing
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.ImageShape">
+            <summary>
+            A shape which draws an image
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.ImageShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw the shape
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.ImageShape.AutoScale">
+            <summary>
+            When true indicates the image should grow with the container
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.ImageShape.Image">
+            <summary>
+            Gets or sets the image attached to the shape
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.LineShape">
+            <summary>
+            Represents a line on the canvas
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.LineShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw this line shape to the specified graphics context
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.NoteShape">
+            <summary>
+            Represents a note shape on the diagran
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.NoteShape.RADIUS">
+            <summary>
+            Radius of the rounded corner
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.NoteShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw this note shape to the graphics context
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.RectangleShape">
+            <summary>
+            Represents a single recangle 
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.RectangleShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw the rectangle shape to the specified graphics 
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.RoundedRectangleShape">
+            <summary>
+            Represents a rounded rectangle shape
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.RoundedRectangleShape.RADIUS">
+            <summary>
+            Radius of the rounded corner
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.RoundedRectangleShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw this shape to the specified graphics 
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.Shapes.TextShape">
+            <summary>
+            The text shape represents a text area on the screen.
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.TextShape.m_text">
+            <summary>
+            The text of this shape
+            </summary>
+        </member>
+        <member name="F:FyfeSoftware.Sketchy.Core.Shapes.TextShape.m_stringAlignment">
+            <summary>
+            String alignment
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.Shapes.TextShape.DrawTo(System.Drawing.Graphics)">
+            <summary>
+            Draw this text to the specific graphics position
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.TextShape.Text">
+            <summary>
+            Gets or sets the text of the object
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.TextShape.Font">
+            <summary>
+            Font data for the object
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.Shapes.TextShape.Alignment">
+            <summary>
+            Gets or sets the string alignment
+            </summary>
+        </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.StencilEventArgs">
+            <summary>
+            A common class that stores data about shape editing events that occur
+            within a canvas
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.StencilEventArgs.Stencil">
+            <summary>
+            Identifies the stencil that was updated
+            </summary>
+        </member>
+    </members>
+</doc>
