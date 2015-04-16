@@ -51,27 +51,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Design\BackgroundImageShape.cs" />
-    <Compile Include="Design\BarcodeFormFieldStencil.cs" />
-    <Compile Include="Design\BubbleFormFieldStencil.cs" />
-    <Compile Include="Design\CornerAnchorStencil.cs" />
-    <Compile Include="OmrBarcodeField.cs" />
-    <Compile Include="OmrBoundObject.cs" />
-    <Compile Include="OmrBubbleField.cs" />
-    <Compile Include="OmrQuestionField.cs" />
-    <Compile Include="OmrTemplate.cs" />
-    <Compile Include="OmrIdentifiedObject.cs" />
-    <Compile Include="OmrTrueFalseField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MarkEngine.Core\MarkEngine.csproj">
+    <ProjectReference Include="..\MarkEngine.Core\OmrMarkEngine.Core.csproj">
       <Project>{8bd8d657-f0fa-4d24-99b7-b7669e6063c3}</Project>
       <Name>MarkEngine</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\view-barcode.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
