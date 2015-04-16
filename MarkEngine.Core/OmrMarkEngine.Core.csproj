@@ -99,7 +99,9 @@
     <Compile Include="Template\Design\CornerAnchorStencil.cs" />
     <Compile Include="Wia\WIAConstants.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="MarkEngine.Core.licenseheader" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Template\Resources\view-barcode.png" />
   </ItemGroup>

@@ -1,6 +1,8 @@
-﻿/* 
+extensions: designer.cs generated.cs
+extensions: .cs .cpp .h
+/* 
  * Optical Mark Recognition 
- * Copyright 2014-2015 Justin Fyfe
+ * Copyright 2014-%CurrentYear% Justin Fyfe
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -14,25 +16,16 @@
  * License for the specific language governing permissions and limitations under 
  * the License.
  * 
- * Author: Justin
- * Date: 4-16-2015
+ * Author: %UserName%
+ * Date: %CreationMonth%-%CreationDay%-%CreationYear%
  */
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OmrMarkEngine.Template
-{
-    /// <summary>
-    /// OMR Barcode Field
-    /// </summary>
-    public class OmrBarcodeField : OmrQuestionField
-    {
-
-
-
-    }
-}
+extensions: .aspx .ascx
+<%-- 
+Sample license text.
+--%>
+extensions: .vb
+'Sample license text.
+extensions:  .xml .config .xsd
+<!--
+Sample license text.
+-->
