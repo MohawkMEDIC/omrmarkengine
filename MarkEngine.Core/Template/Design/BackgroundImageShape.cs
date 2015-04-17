@@ -88,6 +88,9 @@ namespace MarkerEngine.Template.Design
                 this.m_image = value;
                 this.Position = new PointF(0, 0);
                 this.Size = this.m_image.Size;
+                
+                if(this.GetCanvas() != null)
+                    this.GetCanvas().Size = new Size((int)this.Size.Width, (int)this.Size.Height);
 
                 // Redraw on change
                 if(this.GetCanvas() != null)
@@ -113,8 +116,9 @@ namespace MarkerEngine.Template.Design
         /// <returns></returns>
         public override bool DrawTo(Graphics g)
         {
-            if(this.GetCanvas().Size != this.m_size)
-                this.GetCanvas().Size = this.m_image.Size;
+            if (this.GetCanvas().Size.Width < this.Size.Width &&
+                this.GetCanvas().Size.Height < this.Size.Height)
+                this.GetCanvas().Size = new Size((int)this.Size.Width, (int)this.Size.Height);
 
             g.DrawImage(this.m_image, this.DrawPosition.X, this.DrawPosition.Y, this.DrawSize.Width, this.DrawSize.Height);
             return true;

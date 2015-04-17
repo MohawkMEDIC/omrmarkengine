@@ -45,7 +45,7 @@
             this.bwUpdate = new System.ComponentModel.BackgroundWorker();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.bwGiis = new System.ComponentModel.BackgroundWorker();
+            this.bwPostProcess = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -206,10 +206,10 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // bwGiis
+            // bwPostProcess
             // 
-            this.bwGiis.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwGiis_DoWork);
-            this.bwGiis.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwGiis_RunWorkerCompleted);
+            this.bwPostProcess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwPostProcess_DoWork);
+            this.bwPostProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwPostProcess_RunWorkerCompleted);
             // 
             // frmAutoScan
             // 
@@ -254,7 +254,7 @@
         private System.ComponentModel.BackgroundWorker bwUpdate;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.ComponentModel.BackgroundWorker bwGiis;
+        private System.ComponentModel.BackgroundWorker bwPostProcess;
 
     }
 }

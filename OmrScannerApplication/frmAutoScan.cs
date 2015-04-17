@@ -24,7 +24,6 @@ using OmrMarkEngine.Core.Processor;
 using OmrMarkEngine.Output;
 using OmrMarkEngine.Template;
 using OmrMarkEngine.Wia;
-using OmrScannerApplication.Sync;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -270,7 +269,7 @@ namespace OmrScannerApplication
                     // Save the scanned page
                     this.m_scannedPages.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), String.Format("scan-{0}.xml", DateTime.Now.ToString("yyyyMMddHHmmss"))));
                     this.lblStatus.Text = "Uploading data to Immunization Registry...";
-                    this.bwGiis.RunWorkerAsync();
+                    this.bwPostProcess.RunWorkerAsync();
                 }
                 
             }
@@ -281,24 +280,22 @@ namespace OmrScannerApplication
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void bwGiis_DoWork(object sender, DoWorkEventArgs e)
+        private void bwPostProcess_DoWork(object sender, DoWorkEventArgs e)
         {
             // Loop through each page and do an appropriate action
+            var templateScriptUtil = new OmrMarkEngine.Template.Scripting.TemplateScriptUtil();
+
             foreach(var page in this.m_scannedPages.Pages)
             {
-                var type = typeof(frmAutoScan).Assembly.GetType(string.Format("OmrScannerApplication.Sync.{0}", page.TemplateId));
-                if(type == null)
-                    throw new InvalidAsynchronousStateException(String.Format("No mechanism for synchronizing {0}", page.TemplateId));
-                var ci = type.GetConstructor(Type.EmptyTypes);
-                if(ci == null)
-                    throw new InvalidAsynchronousStateException(String.Format("No parameterless constructor on synchronizer for {0}", page.TemplateId));
-                var syncImpl = ci.Invoke(null) as ISynchronizer;
-                if(syncImpl == null)
-                    throw new InvalidAsynchronousStateException(String.Format("Synchronizer {0} does not implement ISynchronizer", page.TemplateId));
-                
-                // Now sync
-                syncImpl.Sync(page);
+                // Run through the scripts
+                var templateFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), page.TemplateId + ".mxml");
+                // Apply template
+                var template = OmrTemplate.Load(templateFile);
 
+                // Run script
+                templateScriptUtil.Run(template, page);
+
+                
             }
         }
         
@@ -307,7 +304,7 @@ namespace OmrScannerApplication
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void bwGiis_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bwPostProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if(e.Error != null)
             {

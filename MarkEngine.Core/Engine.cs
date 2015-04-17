@@ -171,7 +171,7 @@ namespace OmrMarkEngine.Core
                     bmp.Save(Path.Combine(saveDirectory, string.Format("{0}-{1}-gs.bmp", DateTime.Now.ToString("yyyyMMddHHmmss"), parmStr)));
 
                 // Now binarize
-                Threshold binaryThreshold = new Threshold(120);
+                Threshold binaryThreshold = new Threshold(template.ScanThreshold);
                 binaryThreshold.ApplyInPlace(bmp);
 
                 if (this.SaveIntermediaryImages)

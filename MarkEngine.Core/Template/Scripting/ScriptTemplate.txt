@@ -1,0 +1,23 @@
+﻿using OmrMarkEngine.Output;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using OmrMarkEngine.Template.Scripting.Util;
+
+namespace OmrScannerApplication.Scripting
+{
+    public static class Script 
+    {
+
+		public static String Err;
+
+        public static void Run(OmrPageOutput page)
+        {
+			$$script$$
+        }
+    }
+}

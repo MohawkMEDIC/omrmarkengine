@@ -120,10 +120,13 @@ namespace ScannerTemplate
                 {
                     var img = Image.FromStream(ms);
                     img.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    String tFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
-                    img.Save(tFile);
-                    this.m_currentTemplate = OmrTemplate.FromFile(tFile);
-
+                    using (ScannedImage sci = new ScannedImage(img))
+                    {
+                        String tFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+                        using (var correctedImage = sci.GetCorrectedImage())
+                            img.Save(tFile);
+                        this.m_currentTemplate = OmrTemplate.FromFile(tFile);
+                    }
                 }
                 this.UpdateTemplateDiagram();
                 this.testToolStripMenuItem.Enabled = true;
@@ -572,15 +575,37 @@ namespace ScannerTemplate
         private void bwImageProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
 
+
             lblStatus.Text = "Processing Images...";
             spReplay.Panel1Collapsed = false;
+            
             var validationResult = (e.Result as OmrPageOutput).Validate(this.m_currentTemplate);
             var isValid = validationResult.IsValid;
             var key = lsvImages.Items.Add(isValid ? "Pass" : "Fail", isValid ? 0 : 1);
             key.SubItems.Add((e.Result as OmrPageOutput).Id);
             key.Tag = e.Result;
+        
+            if(enableTemplateScriptsToolStripMenuItem.Checked)
+            {
+                lblStatus.Text = "Running Script...";
+                Application.DoEvents();
+                try
+                {
+                    new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(this.m_currentTemplate, e.Result as OmrPageOutput);
+                }
+                catch(Exception ex)
+                {
+                    key.ImageIndex = 1;
+                    key.Text = "Script Error";
+                    key.ToolTipText = ex.ToString();
+                    key.SubItems.Add(ex.Message);
+                }
+            }
             if (this.m_processQueue.Count > 0)
             {
+                lblStatus.Text = "Processing Images...";
+                Application.DoEvents();
+
                 this.bwImageProcess.RunWorkerAsync();
             }
             else
@@ -616,8 +641,43 @@ namespace ScannerTemplate
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+ 
             this.Close();
         }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.m_isDirty)
+            switch(MessageBox.Show("Discard unsaved changes?", "Confirm Close", MessageBoxButtons.YesNoCancel))
+            {
+                case System.Windows.Forms.DialogResult.Yes:
+                    this.mnuSave_Click(sender, e);
+                    break;
+                case System.Windows.Forms.DialogResult.Cancel:
+                    e.Cancel = true;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Delete selected
+        /// </summary>
+        private void deleteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.m_canvas.SelectedShapes == null) return;
+
+            List<IShape> garbagePile = new List<IShape>(this.m_canvas.SelectedShapes);
+            this.m_canvas.ClearSelection();
+            foreach (var shp in garbagePile)
+            {
+                this.m_canvas.Remove(shp);
+                this.m_currentTemplate.Fields.Remove(shp.Tag as OmrQuestionField);
+            }
+        }
+
+
+
+
         
 
     }

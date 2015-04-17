@@ -5,13 +5,13 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HIESeeding.Util
+namespace OmrMarkEngine.Template.Scripting.Util
 {
     /// <summary>
     /// Return class
     /// </summary>
     [DataContract]
-    class RestReturn
+    public class RestReturn
     {
         // Identifier
         [DataMember(Name = "id")]

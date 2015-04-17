@@ -22,6 +22,7 @@ using OmrMarkEngine.Core.Processor;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
 using System.IO;
@@ -30,6 +31,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Design;
 using System.Xml.Serialization;
+using OmrMarkEngine.Core.Template;
 
 namespace OmrMarkEngine.Template
 {
@@ -46,6 +48,7 @@ namespace OmrMarkEngine.Template
         /// </summary>
         public OmrTemplate()
         {
+            this.ScanThreshold = 120;
             this.Id = "MyForm";
             this.Fields = new List<OmrQuestionField>();
         }
@@ -161,5 +164,18 @@ namespace OmrMarkEngine.Template
 
             return retVal;
         }
+
+        /// <summary>
+        /// Scan threshold
+        /// </summary>
+        [XmlAttribute("scanThreshold")]
+        public int ScanThreshold { get; set; }
+
+        /// <summary>
+        /// Script fired after processing is completed
+        /// </summary>
+        [XmlElement("script")]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        public OmrTemplateScript Script { get; set; }
     }
 }

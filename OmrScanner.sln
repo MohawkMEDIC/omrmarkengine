@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmrMarkEngine.Core", "MarkE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmrScannerApplication", "OmrScannerApplication\OmrScannerApplication.csproj", "{A32C8B82-83B2-4B84-BA12-3B3BC04C44A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkEngine.Template", "MarkEngine.Template\MarkEngine.Template.csproj", "{80582345-DB28-447B-A399-5D1C530C2B92}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{A32C8B82-83B2-4B84-BA12-3B3BC04C44A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A32C8B82-83B2-4B84-BA12-3B3BC04C44A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A32C8B82-83B2-4B84-BA12-3B3BC04C44A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80582345-DB28-447B-A399-5D1C530C2B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80582345-DB28-447B-A399-5D1C530C2B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80582345-DB28-447B-A399-5D1C530C2B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80582345-DB28-447B-A399-5D1C530C2B92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

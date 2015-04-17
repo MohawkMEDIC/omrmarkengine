@@ -37,15 +37,15 @@
   <ItemGroup>
     <Reference Include="FyfeSoftware.Sketchy.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Solution Items\FyfeSoftware.Sketchy.Core.dll</HintPath>
+      <HintPath>..\..\sketchy_git\FyfeSoftware.Sketchy.WinForms\bin\Debug\FyfeSoftware.Sketchy.Core.dll</HintPath>
     </Reference>
     <Reference Include="FyfeSoftware.Sketchy.Design, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Solution Items\FyfeSoftware.Sketchy.Design.dll</HintPath>
+      <HintPath>..\..\sketchy_git\FyfeSoftware.Sketchy.WinForms\bin\Debug\FyfeSoftware.Sketchy.Design.dll</HintPath>
     </Reference>
     <Reference Include="FyfeSoftware.Sketchy.WinForms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Solution Items\FyfeSoftware.Sketchy.WinForms.dll</HintPath>
+      <HintPath>..\..\sketchy_git\FyfeSoftware.Sketchy.WinForms\bin\Debug\FyfeSoftware.Sketchy.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
