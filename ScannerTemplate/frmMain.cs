@@ -43,6 +43,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using OmrMarkEngine.Wia;
+using OmrMarkEngine.Output.Transforms;
 
 namespace ScannerTemplate
 {
@@ -75,6 +76,9 @@ namespace ScannerTemplate
         // Dirty flag
         private bool m_isDirty = false;
 
+        // Transforms
+        private List<IOutputTransform> m_transforms = new List<IOutputTransform>();
+
         public frmMain()
         {
             InitializeComponent();
@@ -101,6 +105,14 @@ namespace ScannerTemplate
                 mnuNewFromScanner.DropDownItems.Add("No Scanners Available");
 
             }
+
+            // Output types
+            foreach(var itm in typeof(Engine).Assembly.GetTypes().Where(o=>o.GetInterface(typeof(IOutputTransform).FullName) != null))
+            {
+                var tx = Activator.CreateInstance(itm) as IOutputTransform;
+                this.m_transforms.Add(tx);
+            }
+
         }
 
         /// <summary>
@@ -126,6 +138,7 @@ namespace ScannerTemplate
                         sci.Analyze();
                         using (var correctedImage = sci.GetCorrectedImage())
                             img.Save(tFile);
+                        lsvImages.Clear();
                         this.m_currentTemplate = OmrTemplate.FromFile(tFile);
                     }
                 }
@@ -166,8 +179,6 @@ namespace ScannerTemplate
         void tsi_Click(object sender, EventArgs e)
         {
             lblStatus.Text = "Scanning...";
-
-            lsvImages.Items.Clear();
             this.m_scanEngine.ScanAsync((sender as ToolStripMenuItem).Tag as ScannerInfo);
 
         }
@@ -214,6 +225,7 @@ namespace ScannerTemplate
                 if (dlgOpen.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     //skHost1.Canvas.Clear();
+                    this.lsvImages.Clear();
                     this.m_currentTemplate = OmrTemplate.FromFile(dlgOpen.FileName);
                     this.UpdateTemplateDiagram();
                     this.testToolStripMenuItem.Enabled = true;
@@ -374,6 +386,7 @@ namespace ScannerTemplate
                 if (openDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     this.m_currentTemplate = OmrTemplate.Load(openDialog.FileName);
+                    lsvImages.Items.Clear();
                     this.mnuSave.Enabled = true;
                     this.UpdateTemplateDiagram();
                     // Add field data
@@ -493,8 +506,10 @@ namespace ScannerTemplate
             if (lsvImages.SelectedItems.Count == 0)
             {
                 this.m_currentTemplate.SourcePath = this.m_currentTemplate.SourcePath;
+                saveSelectedOutputToolStripMenuItem.Enabled = enableTemplateScriptsToolStripMenuItem.Enabled = false;
                 return;
             }
+            saveSelectedOutputToolStripMenuItem.Enabled = enableTemplateScriptsToolStripMenuItem.Enabled = true;
             // First we want to apply the template
             Engine engineProcessor = new Engine();
             var output = lsvImages.SelectedItems[0].Tag as OmrPageOutput;
@@ -590,22 +605,7 @@ namespace ScannerTemplate
             key.SubItems.Add((e.Result as OmrPageOutput).Id);
             key.Tag = e.Result;
         
-            if(enableTemplateScriptsToolStripMenuItem.Checked)
-            {
-                lblStatus.Text = "Running Script...";
-                Application.DoEvents();
-                try
-                {
-                    new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(this.m_currentTemplate, e.Result as OmrPageOutput);
-                }
-                catch(Exception ex)
-                {
-                    key.ImageIndex = 1;
-                    key.Text = "Script Error";
-                    key.ToolTipText = ex.ToString();
-                    key.SubItems.Add(ex.Message);
-                }
-            }
+            
             if (this.m_processQueue.Count > 0)
             {
                 lblStatus.Text = "Processing Images...";
@@ -677,6 +677,69 @@ namespace ScannerTemplate
             {
                 this.m_canvas.Remove(shp);
                 this.m_currentTemplate.Fields.Remove(shp.Tag as OmrQuestionField);
+            }
+        }
+
+        /// <summary>
+        /// Save output to XML file
+        /// </summary>
+        private void saveSelectedOutputToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lsvImages.SelectedItems.Count == 0) return;
+
+            // Filters
+            StringBuilder filters = new StringBuilder();
+            foreach (var tx in this.m_transforms)
+                filters.AppendFormat("{0} (*.{1})|*.{1}|", tx.Name, tx.Extension);
+            filters.Remove(filters.Length - 1, 1);
+
+            var saveDialog = new SaveFileDialog()
+            {
+                Title = "Save Output",
+                Filter = filters.ToString(),
+                AddExtension = true
+            };
+            if(saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    var transformer = this.m_transforms.Find(o => saveDialog.FileName.EndsWith(o.Extension));
+                    using(FileStream fs = File.Create(saveDialog.FileName))
+                    {
+                        OmrPageOutputCollection pages = new OmrPageOutputCollection();
+                        foreach (ListViewItem sel in lsvImages.SelectedItems)
+                            pages.Pages.Add(sel.Tag as OmrPageOutput);
+
+                        byte[] data = transformer.Transform(this.m_currentTemplate, pages);
+                        fs.Write(data, 0, data.Length);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error Saving");
+                }
+            }
+        }
+
+        private void enableTemplateScriptsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lsvImages.SelectedItems.Count == 0) return;
+
+            lblStatus.Text = "Running Script...";
+            Application.DoEvents();
+            try
+            {
+                foreach (ListViewItem sel in lsvImages.SelectedItems)
+                    new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(this.m_currentTemplate, sel.Tag as OmrPageOutput);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Script Error");
+            }
+            finally
+            {
+                lblStatus.Text = "Idle";
+
             }
         }
 

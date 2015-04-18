@@ -61,6 +61,12 @@ namespace OmrMarkEngine.Output
         public String TemplateId { get; set; }
 
         /// <summary>
+        /// The path the template
+        /// </summary>
+        [XmlIgnore]
+        public OmrTemplate Template { get; set; }
+
+        /// <summary>
         /// Parameters
         /// </summary>
         [XmlElement("parameter")]

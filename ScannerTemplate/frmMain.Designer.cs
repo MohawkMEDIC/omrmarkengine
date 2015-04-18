@@ -75,6 +75,7 @@
             this.lblZm = new System.Windows.Forms.Label();
             this.imlDocumentView = new System.Windows.Forms.ImageList(this.components);
             this.bwImageProcess = new System.ComponentModel.BackgroundWorker();
+            this.saveSelectedOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.Panel2.SuspendLayout();
@@ -162,7 +163,6 @@
             this.lsvImages.GridLines = true;
             this.lsvImages.LargeImageList = this.imlView;
             this.lsvImages.Location = new System.Drawing.Point(0, 18);
-            this.lsvImages.MultiSelect = false;
             this.lsvImages.Name = "lsvImages";
             this.lsvImages.ShowGroups = false;
             this.lsvImages.Size = new System.Drawing.Size(162, 160);
@@ -425,7 +425,8 @@
             this.mnuScanner,
             this.fromImagesToolStripMenuItem,
             this.toolStripMenuItem5,
-            this.enableTemplateScriptsToolStripMenuItem});
+            this.enableTemplateScriptsToolStripMenuItem,
+            this.saveSelectedOutputToolStripMenuItem});
             this.testToolStripMenuItem.Enabled = false;
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
@@ -451,10 +452,12 @@
             // 
             // enableTemplateScriptsToolStripMenuItem
             // 
-            this.enableTemplateScriptsToolStripMenuItem.CheckOnClick = true;
+            this.enableTemplateScriptsToolStripMenuItem.Enabled = false;
             this.enableTemplateScriptsToolStripMenuItem.Name = "enableTemplateScriptsToolStripMenuItem";
-            this.enableTemplateScriptsToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.enableTemplateScriptsToolStripMenuItem.Text = "&Enable Template Scripts...";
+            this.enableTemplateScriptsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.enableTemplateScriptsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.enableTemplateScriptsToolStripMenuItem.Text = "&Run Template Script";
+            this.enableTemplateScriptsToolStripMenuItem.Click += new System.EventHandler(this.enableTemplateScriptsToolStripMenuItem_Click);
             // 
             // panel1
             // 
@@ -521,6 +524,14 @@
             // 
             this.bwImageProcess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwImageProcess_DoWork);
             this.bwImageProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwImageProcess_RunWorkerCompleted);
+            // 
+            // saveSelectedOutputToolStripMenuItem
+            // 
+            this.saveSelectedOutputToolStripMenuItem.Enabled = false;
+            this.saveSelectedOutputToolStripMenuItem.Name = "saveSelectedOutputToolStripMenuItem";
+            this.saveSelectedOutputToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.saveSelectedOutputToolStripMenuItem.Text = "&Save Selected Output...";
+            this.saveSelectedOutputToolStripMenuItem.Click += new System.EventHandler(this.saveSelectedOutputToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -603,6 +614,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem enableTemplateScriptsToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ToolStripMenuItem saveSelectedOutputToolStripMenuItem;
     }
 }
 

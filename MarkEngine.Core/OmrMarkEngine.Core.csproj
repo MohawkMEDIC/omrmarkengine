@@ -80,7 +80,11 @@
     <Compile Include="Output\OmrRowData.cs" />
     <Compile Include="Output\OmrPageOutput.cs" />
     <Compile Include="Output\OmrScanOutcome.cs" />
+    <Compile Include="Output\Transforms\CsvOutputTransform.cs" />
+    <Compile Include="Output\Transforms\IOutputTransform.cs" />
+    <Compile Include="Output\Transforms\RawOutputTransform.cs" />
     <Compile Include="Output\ValidationResult.cs" />
+    <Compile Include="Processor\WaitThreadPool.cs" />
     <Compile Include="Template\OmrTemplateScript.cs" />
     <Compile Include="Template\Scripting\RestReturn.cs" />
     <Compile Include="Template\Scripting\RestUtil.cs" />

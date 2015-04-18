@@ -32,6 +32,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ZXing;
+using AForge.Imaging;
 
 namespace OmrMarkEngine.Core
 {
@@ -67,7 +68,8 @@ namespace OmrMarkEngine.Core
                 Id = image.TemplateName + DateTime.Now.ToString("yyyyMMddHHmmss"),
                 TemplateId = image.TemplateName,
                 Parameters = image.Parameters, 
-                StartTime = DateTime.Now
+                StartTime = DateTime.Now,
+                Template = template
             };
 
             // Save directory for output images 
@@ -190,38 +192,71 @@ namespace OmrMarkEngine.Core
                 if (this.SaveIntermediaryImages)
                     bmp.Save(Path.Combine(saveDirectory, string.Format("{0}-{1}-inv.bmp", DateTime.Now.ToString("yyyyMMddHHmmss"), parmStr)));
 
-                
-                // Iterate over remaining fields
-                foreach(var itm in template.Fields.Where(o=>o is OmrBubbleField))
+                // Crop out areas of interest
+                List<KeyValuePair<OmrQuestionField, Bitmap>> areasOfInterest = new List<KeyValuePair<OmrQuestionField, Bitmap>>();
+                foreach (var itm in template.Fields.Where(o => o is OmrBubbleField))
                 {
                     PointF position = itm.TopLeft;
                     SizeF size = new SizeF(itm.TopRight.X - itm.TopLeft.X, itm.BottomLeft.Y - itm.TopLeft.Y);
-                    using (var areaOfInterest = new Crop(new Rectangle((int)position.X, (int)position.Y, (int)size.Width, (int)size.Height)).Apply(bmp))
+                    areasOfInterest.Add(new KeyValuePair<OmrQuestionField, Bitmap>(
+                        itm,
+                        new Crop(new Rectangle((int)position.X, (int)position.Y, (int)size.Width, (int)size.Height)).Apply(bmp))
+                        );
+                }
+
+                // Queue analysis
+                WaitThreadPool wtp = new WaitThreadPool();
+                Object syncLock = new object();
+
+                foreach(var itm in areasOfInterest)
+                {
+                    wtp.QueueUserWorkItem(img =>
                     {
+                        var parm = (KeyValuePair<OmrQuestionField, Bitmap>)itm;
+
                         try
                         {
-                            ExtractBiggestBlob blobFilter = new ExtractBiggestBlob();
-                            using (var blob = blobFilter.Apply(areaOfInterest))
-                                if (blob != null)
-                                {
-                                    var area = new AForge.Imaging.ImageStatistics(blob).PixelsCountWithoutBlack;
-                                    if (area < 35) continue;
-                                    var bubbleField = itm as OmrBubbleField;
-                                    hitFields.Add(itm, new OmrBubbleData()
+                            var areaOfInterest = parm.Value;
+                            var field = parm.Key;
+
+                            BlobCounter blobCounter = new BlobCounter();
+                            blobCounter.FilterBlobs = true;
+
+                            // Check for circles
+                            blobCounter.ProcessImage(areaOfInterest);
+                            Blob[] blobs = blobCounter.GetObjectsInformation();
+                            var blob = blobs.FirstOrDefault(o => o.Area == blobs.Max(b => b.Area));
+                            if (blob != null)
+                            {
+                                //var area = new AForge.Imaging.ImageStatistics(blob).PixelsCountWithoutBlack;
+                                if (blob.Area < 30) 
+                                    return;
+                                var bubbleField = field as OmrBubbleField;
+                                lock(syncLock)
+                                    hitFields.Add(field, new OmrBubbleData()
                                     {
-                                        Id = itm.Id,
+                                        Id = field.Id,
                                         Key = bubbleField.Question,
                                         Value = bubbleField.Value,
-                                        TopLeft = new PointF(blobFilter.BlobPosition.X + position.X, blobFilter.BlobPosition.Y + position.Y),
-                                        BottomRight = new PointF(blobFilter.BlobPosition.X + blob.Width + position.X, blobFilter.BlobPosition.Y + blob.Height + position.Y),
-                                        BlobArea = area
+                                        TopLeft = new PointF(blob.Rectangle.X + field.TopLeft.X, blob.Rectangle.Y + field.TopLeft.Y),
+                                        BottomRight = new PointF(blob.Rectangle.X + blob.Rectangle.Width + field.TopLeft.X, blob.Rectangle.Y + blob.Rectangle.Height + field.TopLeft.Y),
+                                        BlobArea = blob.Area
                                     });
-                                }
+                            }
                         }
-                        catch { }
-                    }
-                    
+                        catch (Exception e) {
+                            Trace.TraceError(e.ToString());
+                        }
+                        finally
+                        {
+                            parm.Value.Dispose();
+                        }
+                    }, itm);
+                
+
                 }
+
+                wtp.WaitOne();
 
                 // Organize the response 
                 foreach(var res in hitFields)

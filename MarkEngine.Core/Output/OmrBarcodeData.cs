@@ -45,6 +45,13 @@ namespace OmrMarkEngine.Output
         [XmlAttribute("data")]
         public String BarcodeData { get; set; }
 
+        /// <summary>
+        /// Barcode data as string
+        /// </summary>
+        public override string ToString()
+        {
+            return this.BarcodeData;
+        }
 
     }
 }

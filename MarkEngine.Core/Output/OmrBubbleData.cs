@@ -61,5 +61,13 @@ namespace OmrMarkEngine.Output
                 return float.Parse(this.Value);
             }
         }
+
+        /// <summary>
+        /// Represent as a string
+        /// </summary>
+        public override string ToString()
+        {
+            return this.Value;
+        }
     }
 }
