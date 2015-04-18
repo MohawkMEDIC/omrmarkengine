@@ -47,6 +47,8 @@ namespace MarkerEngine.Template.Design
             this.m_template = template;
             if (System.IO.File.Exists(template.SourcePath))
                 this.Image = Image.FromFile(template.SourcePath);
+            else if(System.IO.File.Exists(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(template.FileName), template.SourcePath)))
+                this.Image = Image.FromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(template.FileName), template.SourcePath));
             else
                 this.Image = (Image)new Bitmap((int)template.BottomRight.X, (int)template.BottomRight.Y, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             this.m_template.PropertyChanged += m_template_PropertyChanged;

@@ -87,14 +87,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Samples\TallySheet.mxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\TallySheet.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="ScannerTemplate.licenseheader" />
-    <None Include="Templates\Legal-Landscape-TearArea.docx">
+    <None Include="Templates\Legal-Landscape-TearArea.dotx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\Letter-Landscape.docx">
+    <None Include="Templates\Letter-Landscape.dotx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates\Letter-Portrait.docx">
+    <None Include="Templates\Letter-Portrait.dotx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -109,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="designer.ico" />
+    <Content Include="Samples\TallySheet.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

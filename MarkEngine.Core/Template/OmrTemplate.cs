@@ -43,6 +43,7 @@ namespace OmrMarkEngine.Template
         // Backing fields
         private String m_sourcePath;
         private Image m_imageSource;
+
         /// <summary>
         /// Creates a new Omr template
         /// </summary>
@@ -97,6 +98,7 @@ namespace OmrMarkEngine.Template
         [XmlElement("barcodeQuestion", Type = typeof(OmrBarcodeField))]
         [XmlElement("questionBubble", Type = typeof(OmrBubbleField))]
         public List<OmrQuestionField> Fields { get; private set; }
+
 
         /// <summary>
         /// Gets a list of fields collapsed from all containers
