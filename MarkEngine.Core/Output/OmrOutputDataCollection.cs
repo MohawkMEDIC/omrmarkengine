@@ -48,6 +48,7 @@ namespace OmrMarkEngine.Output
         [XmlElement("row", typeof(OmrRowData))]
         [XmlElement("barcode", typeof(OmrBarcodeData))]
         [XmlElement("bubble", typeof(OmrBubbleData))]
+        [XmlElement("aggregate", typeof(OmrAggregateDataOutput))]
         public List<OmrOutputData> Details { get; set; }
 
         /// <summary>
@@ -78,8 +79,10 @@ namespace OmrMarkEngine.Output
             retVal.IsValid = true;
             // Row ID
             String rowId = null;
-            if(this is OmrRowData)
+            if (this is OmrRowData)
                 rowId = (this as OmrRowData).Id;
+            else if (this is OmrAggregateDataOutput)
+                rowId = (this as OmrAggregateDataOutput).RowId;
 
             List<OmrQuestionField> requiredFields = new List<OmrQuestionField>(template.Fields.Where(o => o.IsQuestionRequired && o.AnswerRowGroup == rowId));
 

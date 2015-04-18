@@ -18,7 +18,6 @@
  * Date: 4-16-2015
  */
 
-using MARC.Everest.Threading;
 using OmrMarkEngine.Core;
 using OmrMarkEngine.Core.Processor;
 using OmrMarkEngine.Output;

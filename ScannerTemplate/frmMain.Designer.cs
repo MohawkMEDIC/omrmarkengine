@@ -37,6 +37,7 @@
             this.lsvImages = new System.Windows.Forms.ListView();
             this.Preview = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imlView = new System.Windows.Forms.ImageList(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -65,6 +66,8 @@
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuScanner = new System.Windows.Forms.ToolStripMenuItem();
             this.fromImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.enableTemplateScriptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblStatus = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -72,9 +75,6 @@
             this.lblZm = new System.Windows.Forms.Label();
             this.imlDocumentView = new System.Windows.Forms.ImageList(this.components);
             this.bwImageProcess = new System.ComponentModel.BackgroundWorker();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.enableTemplateScriptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.Panel2.SuspendLayout();
@@ -183,6 +183,10 @@
             // 
             this.columnHeader1.Text = "Scan ID";
             this.columnHeader1.Width = 82;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Details";
             // 
             // imlView
             // 
@@ -440,6 +444,18 @@
             this.fromImagesToolStripMenuItem.Text = "From &Images...";
             this.fromImagesToolStripMenuItem.Click += new System.EventHandler(this.fromImagesToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(206, 6);
+            // 
+            // enableTemplateScriptsToolStripMenuItem
+            // 
+            this.enableTemplateScriptsToolStripMenuItem.CheckOnClick = true;
+            this.enableTemplateScriptsToolStripMenuItem.Name = "enableTemplateScriptsToolStripMenuItem";
+            this.enableTemplateScriptsToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.enableTemplateScriptsToolStripMenuItem.Text = "&Enable Template Scripts...";
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.lblStatus);
@@ -505,22 +521,6 @@
             // 
             this.bwImageProcess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwImageProcess_DoWork);
             this.bwImageProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwImageProcess_RunWorkerCompleted);
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(206, 6);
-            // 
-            // enableTemplateScriptsToolStripMenuItem
-            // 
-            this.enableTemplateScriptsToolStripMenuItem.CheckOnClick = true;
-            this.enableTemplateScriptsToolStripMenuItem.Name = "enableTemplateScriptsToolStripMenuItem";
-            this.enableTemplateScriptsToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.enableTemplateScriptsToolStripMenuItem.Text = "&Enable Template Scripts...";
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Details";
             // 
             // frmMain
             // 

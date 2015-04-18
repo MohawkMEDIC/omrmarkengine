@@ -123,6 +123,7 @@ namespace ScannerTemplate
                     using (ScannedImage sci = new ScannedImage(img))
                     {
                         String tFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+                        sci.Analyze();
                         using (var correctedImage = sci.GetCorrectedImage())
                             img.Save(tFile);
                         this.m_currentTemplate = OmrTemplate.FromFile(tFile);
@@ -540,6 +541,10 @@ namespace ScannerTemplate
             {
                 var collection = (data as OmrOutputDataCollection);
                 retVal.Text = string.Format("{0}", collection.Id);
+                if(data is OmrAggregateDataOutput)
+                {
+                    retVal.Text += string.Format(" ({0} = {1})", (data as OmrAggregateDataOutput).Function, (data as OmrAggregateDataOutput).AggregateValue);
+                }
                 retVal.ImageIndex = retVal.StateImageIndex = 3;
                 foreach (var itm in collection.Details)
                     retVal.Nodes.Add(this.CreateTreeNode(itm));

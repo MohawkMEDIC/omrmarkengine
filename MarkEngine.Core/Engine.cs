@@ -205,7 +205,7 @@ namespace OmrMarkEngine.Core
                                 if (blob != null)
                                 {
                                     var area = new AForge.Imaging.ImageStatistics(blob).PixelsCountWithoutBlack;
-                                    if (area < 3) continue;
+                                    if (area < 35) continue;
                                     var bubbleField = itm as OmrBubbleField;
                                     hitFields.Add(itm, new OmrBubbleData()
                                     {
@@ -228,8 +228,7 @@ namespace OmrMarkEngine.Core
                 {
                     if (String.IsNullOrEmpty(res.Key.AnswerRowGroup))
                     {
-                        if(!retVal.AlreadyAnswered(res.Value))
-                            retVal.Details.Add(res.Value);
+                        this.AddAnswerToOutputCollection(retVal, res);
                     }
                     else
                     {
@@ -244,9 +243,7 @@ namespace OmrMarkEngine.Core
                             retVal.Details.Add(rowGroup);
                         }
 
-                        // Now add answer
-                        if (!rowGroup.AlreadyAnswered(res.Value))
-                            rowGroup.Details.Add(res.Value);
+                        this.AddAnswerToOutputCollection(rowGroup, res);
                     }
                 }
 
@@ -270,6 +267,45 @@ namespace OmrMarkEngine.Core
             }
 
             return retVal;
+        }
+
+        /// <summary>
+        /// Add an answer to an output collection
+        /// </summary>
+        /// <param name="retVal"></param>
+        /// <param name="answerPair"></param>
+        private void AddAnswerToOutputCollection(OmrOutputDataCollection collection, KeyValuePair<OmrQuestionField, OmrOutputData> answerPair )
+        {
+            // Now add answer
+            if (answerPair.Key is OmrBubbleField)
+            {
+                var bubbleField = answerPair.Key as OmrBubbleField;
+                switch (bubbleField.Behavior)
+                {
+                    case BubbleBehaviorType.One:
+                        if (!collection.AlreadyAnswered(answerPair.Value))
+                            collection.Details.Add(answerPair.Value);
+                        break;
+                    case BubbleBehaviorType.Multi:
+                        collection.Details.Add(answerPair.Value);
+                        break;
+                    case BubbleBehaviorType.Count:
+                        var aggregate = collection.Details.Find(o => o.Id == bubbleField.Question) as OmrAggregateDataOutput;
+                        if (aggregate == null)
+                        {
+                            aggregate = new OmrAggregateDataOutput() { Id = bubbleField.Question };
+                            aggregate.Function = AggregationFunction.Count;
+                            collection.Details.Add(aggregate);
+                        }
+                        if (collection is OmrRowData)
+                            aggregate.RowId = collection.Id;
+                        // Add this answer to the aggregate
+                        aggregate.Details.Add(answerPair.Value);
+                        break;
+                }
+            }
+            else if (!collection.AlreadyAnswered(answerPair.Value))
+                collection.Details.Add(answerPair.Value);
         }
 
              
