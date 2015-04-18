@@ -44,6 +44,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using OmrMarkEngine.Wia;
 using OmrMarkEngine.Output.Transforms;
+using System.Reflection;
 
 namespace ScannerTemplate
 {
@@ -449,15 +450,37 @@ namespace ScannerTemplate
 
                     // Constructor
                     var shp = this.m_canvas.FindShape(copyData.Id);
-                    var ci = shp.GetType().GetConstructor(new Type[] { tData.GetType() });
+
+                    ConstructorInfo ci = null;
+                    if(shp != null)
+                        ci = shp.GetType().GetConstructor(new Type[] { tData.GetType() });
+                    else
+                    {
+
+                        if (tData is OmrBarcodeField)
+                            ci = typeof(BarcodeFormFieldStencil).GetConstructor(new Type[] { tData.GetType() });
+                        else if (tData is OmrBubbleField)
+                            ci = typeof(BubbleFormFieldStencil).GetConstructor(new Type[] { tData.GetType() });
+
+                    }
                     if (ci == null)
                     {
                         MessageBox.Show(String.Format("Could not paste object {0}", tData.Id));
                         continue;
                     }
                     IShape clone = ci.Invoke(new object[] { tData }) as IShape;
-                    clone.Position = new PointF(shp.Position.X + 10, shp.Position.Y + 10);
-                    clone.Size = new SizeF(shp.Size.Width, shp.Size.Height);
+
+                    if (shp != null)
+                    {
+                        clone.Position = new PointF(shp.Position.X + 10, shp.Position.Y + 10);
+                        clone.Size = new SizeF(shp.Size.Width, shp.Size.Height);
+                    }
+                    else
+                    {
+                        clone.Position = tData.TopLeft;
+                        clone.Size = new SizeF(tData.BottomRight.X - tData.TopLeft.X, tData.BottomRight.Y - tData.TopLeft.Y);
+                    }
+
                     clone.Tag = tData;
 
                     this.m_currentTemplate.Fields.Add(tData);
@@ -506,6 +529,7 @@ namespace ScannerTemplate
             if (lsvImages.SelectedItems.Count == 0)
             {
                 this.m_currentTemplate.SourcePath = this.m_currentTemplate.SourcePath;
+
                 saveSelectedOutputToolStripMenuItem.Enabled = enableTemplateScriptsToolStripMenuItem.Enabled = false;
                 return;
             }
@@ -514,7 +538,7 @@ namespace ScannerTemplate
             Engine engineProcessor = new Engine();
             var output = lsvImages.SelectedItems[0].Tag as OmrPageOutput;
             this.m_canvas.Add(new OutputVisualizationStencil(output), "previewTest");
-            this.m_currentTemplate.SourcePath = output.AnalyzedImage;
+            this.m_currentTemplate.ImageSource = Image.FromFile(output.AnalyzedImage);
             this.lstErrors.Items.Clear();
             this.lstErrors.Items.AddRange(output.Validate(this.m_currentTemplate).Issues.ToArray<object>());
             // Output the template

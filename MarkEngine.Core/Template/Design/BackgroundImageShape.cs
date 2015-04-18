@@ -64,9 +64,16 @@ namespace MarkerEngine.Template.Design
             if (e.PropertyName == "SourcePath")
             {
                 this.Image.Dispose();
-                this.Image = Image.FromFile(this.m_template.SourcePath);
+
+                if (System.IO.File.Exists(this.m_template.SourcePath))
+                    this.Image = Image.FromFile(this.m_template.SourcePath);
+                else if (System.IO.File.Exists(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.m_template.FileName), this.m_template.SourcePath)))
+                    this.Image = Image.FromFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.m_template.FileName), this.m_template.SourcePath));
+                else
+                    this.Image = (Image)new Bitmap((int)this.m_template.BottomRight.X, (int)this.m_template.BottomRight.Y, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
             }
-            else if (e.PropertyName == "ImageSource")
+            else if (e.PropertyName == "ImageSource" && this.m_template.ImageSource != null)
             {
                 this.Image.Dispose();
                 this.Image = this.m_template.ImageSource;

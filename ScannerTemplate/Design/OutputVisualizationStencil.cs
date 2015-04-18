@@ -63,8 +63,8 @@ namespace ScannerTemplate.Design
 
             this.Add(new TextShape()
             {
-                FillBrush = Brushes.Black,
-                Font = new Font(FontFamily.GenericSansSerif, 12f, FontStyle.Bold),
+                FillBrush = Brushes.White,
+                Font = new Font(FontFamily.GenericSansSerif, 16f, FontStyle.Bold),
                 Position = new PointF(0,0),
                 Text = String.Format("Scan ID: {0}", pageOutput.Id)
             });
