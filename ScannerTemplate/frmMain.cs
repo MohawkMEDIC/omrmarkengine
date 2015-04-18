@@ -727,18 +727,27 @@ namespace ScannerTemplate
 
             lblStatus.Text = "Running Script...";
             Application.DoEvents();
-            try
+            foreach (ListViewItem sel in lsvImages.SelectedItems)
             {
-                foreach (ListViewItem sel in lsvImages.SelectedItems)
+                try
+                {
+                    while (sel.SubItems.Count < 3)
+                        sel.SubItems.Add(new ListViewItem.ListViewSubItem());
+                    sel.SubItems[2].Text = "Running Script";
+                    Application.DoEvents();
                     new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(this.m_currentTemplate, sel.Tag as OmrPageOutput);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Script Error");
-            }
-            finally
-            {
-                lblStatus.Text = "Idle";
+                    sel.SubItems[2].Text = "";
+                }
+                catch (Exception ex)
+                {
+                    sel.SubItems[2].Text = "Error: " + ex.Message;
+                    MessageBox.Show(ex.ToString(), "Script Error");
+                }
+                finally
+                {
+                    lblStatus.Text = "Idle";
+
+                }
 
             }
         }

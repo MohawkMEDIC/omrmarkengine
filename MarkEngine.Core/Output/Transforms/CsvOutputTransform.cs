@@ -49,7 +49,8 @@ namespace OmrMarkEngine.Output.Transforms
                 using(StreamWriter sw = new StreamWriter(ms))
                 {
                     // Get the headings
-                    int nBarcodesPerRow = template.FlatFields.OfType<OmrBarcodeField>().GroupBy(o => o.AnswerRowGroup).Count();
+                    var barcodeGroup= template.FlatFields.OfType<OmrBarcodeField>().GroupBy(o => o.AnswerRowGroup).FirstOrDefault();
+                    int nBarcodesPerRow = barcodeGroup.Count();
                     var questionsPerRow = template.FlatFields.OfType<OmrBubbleField>().Select(o => o.Question).Distinct().ToArray();
                     // Output header row
                     sw.Write("PAGE,ROW");
