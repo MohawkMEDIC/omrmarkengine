@@ -68,6 +68,7 @@
             this.fromImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.enableTemplateScriptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveSelectedOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblStatus = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -75,7 +76,6 @@
             this.lblZm = new System.Windows.Forms.Label();
             this.imlDocumentView = new System.Windows.Forms.ImageList(this.components);
             this.bwImageProcess = new System.ComponentModel.BackgroundWorker();
-            this.saveSelectedOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.Panel2.SuspendLayout();
@@ -435,20 +435,20 @@
             // mnuScanner
             // 
             this.mnuScanner.Name = "mnuScanner";
-            this.mnuScanner.Size = new System.Drawing.Size(209, 22);
+            this.mnuScanner.Size = new System.Drawing.Size(200, 22);
             this.mnuScanner.Text = "From &Scanner";
             // 
             // fromImagesToolStripMenuItem
             // 
             this.fromImagesToolStripMenuItem.Name = "fromImagesToolStripMenuItem";
-            this.fromImagesToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.fromImagesToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.fromImagesToolStripMenuItem.Text = "From &Images...";
             this.fromImagesToolStripMenuItem.Click += new System.EventHandler(this.fromImagesToolStripMenuItem_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(206, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(197, 6);
             // 
             // enableTemplateScriptsToolStripMenuItem
             // 
@@ -458,6 +458,14 @@
             this.enableTemplateScriptsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.enableTemplateScriptsToolStripMenuItem.Text = "&Run Template Script";
             this.enableTemplateScriptsToolStripMenuItem.Click += new System.EventHandler(this.enableTemplateScriptsToolStripMenuItem_Click);
+            // 
+            // saveSelectedOutputToolStripMenuItem
+            // 
+            this.saveSelectedOutputToolStripMenuItem.Enabled = false;
+            this.saveSelectedOutputToolStripMenuItem.Name = "saveSelectedOutputToolStripMenuItem";
+            this.saveSelectedOutputToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.saveSelectedOutputToolStripMenuItem.Text = "&Save Selected Output...";
+            this.saveSelectedOutputToolStripMenuItem.Click += new System.EventHandler(this.saveSelectedOutputToolStripMenuItem_Click);
             // 
             // panel1
             // 
@@ -524,14 +532,6 @@
             // 
             this.bwImageProcess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwImageProcess_DoWork);
             this.bwImageProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwImageProcess_RunWorkerCompleted);
-            // 
-            // saveSelectedOutputToolStripMenuItem
-            // 
-            this.saveSelectedOutputToolStripMenuItem.Enabled = false;
-            this.saveSelectedOutputToolStripMenuItem.Name = "saveSelectedOutputToolStripMenuItem";
-            this.saveSelectedOutputToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.saveSelectedOutputToolStripMenuItem.Text = "&Save Selected Output...";
-            this.saveSelectedOutputToolStripMenuItem.Click += new System.EventHandler(this.saveSelectedOutputToolStripMenuItem_Click);
             // 
             // frmMain
             // 

@@ -63,7 +63,7 @@ namespace OmrMarkEngine.Wia
                     {
                         // Get items
                         WIA.Item wiaItem = wiaDevice.Items[1];
-                        int inColor = 1, dpi = 300;
+                        int inColor = 2, dpi = 300;
                         wiaItem.Properties["6146"].set_Value((int)inColor);//Item MUST be stored in a variable THEN the properties must be set.
                         wiaItem.Properties["6147"].set_Value(dpi);
                         wiaItem.Properties["6148"].set_Value(dpi);
@@ -153,7 +153,7 @@ namespace OmrMarkEngine.Wia
             {
                 // Get items
                 WIA.Item wiaItem = wiaDevice.Items[1];
-                int inColor = 1, dpi = 300;
+                int inColor = 2, dpi = 300;
                 wiaItem.Properties["6146"].set_Value((int)inColor);//Item MUST be stored in a variable THEN the properties must be set.
                 wiaItem.Properties["6147"].set_Value(dpi);
                 wiaItem.Properties["6148"].set_Value(dpi);

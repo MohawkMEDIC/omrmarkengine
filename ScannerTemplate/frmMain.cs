@@ -137,7 +137,7 @@ namespace ScannerTemplate
                         String tFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
                         sci.Analyze();
                         using (var correctedImage = sci.GetCorrectedImage())
-                            img.Save(tFile);
+                            correctedImage.Save(tFile);
                         lsvImages.Clear();
                         this.m_currentTemplate = OmrTemplate.FromFile(tFile);
                     }
