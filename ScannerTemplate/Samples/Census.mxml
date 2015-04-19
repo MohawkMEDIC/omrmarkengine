@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="CENSUS" topLeft="283.5,337.5" bottomLeft="290,2159.5" topRight="2941.5,337.5" bottomRight="2949,2175.5" scanThreshold="120" xmlns="urn:scan-omr:template">
-  <sourcePath>.\TallySheet.jpg</sourcePath>
+  <sourcePath>.\Census.jpg</sourcePath>
   <questionBubble id="OmrQuestion0" topLeft="404,1634" bottomLeft="404,1682" topRight="430,1634" bottomRight="430,1682" isRequiredForRow="true" behavior="Multi" key="AREA" value="Main West" />
   <questionBubble id="OmrQuestion1" topLeft="450,1636" bottomLeft="450,1684" topRight="476,1636" bottomRight="476,1684" isRequiredForRow="true" behavior="Multi" key="AREA" value="James North" />
   <questionBubble id="OmrQuestion2" topLeft="493,1636" bottomLeft="493,1684" topRight="519,1636" bottomRight="519,1684" isRequiredForRow="true" behavior="Multi" key="AREA" value="John Street" />

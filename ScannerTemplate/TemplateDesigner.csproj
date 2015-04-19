@@ -87,10 +87,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Samples\TallySheet.mxml">
+    <None Include="Samples\Census.mxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Samples\TallySheet.docx">
+    <None Include="Samples\Census.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ScannerTemplate.licenseheader" />
@@ -115,7 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="designer.ico" />
-    <Content Include="Samples\TallySheet.jpg">
+    <Content Include="Samples\Census.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
