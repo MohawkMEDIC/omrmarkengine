@@ -77,8 +77,9 @@ namespace OmrMarkEngine.Core
             var parmStr = new StringBuilder();
             if (this.SaveIntermediaryImages)
             {
-                foreach (var pv in image.Parameters)
-                    parmStr.AppendFormat("{0}.", pv);
+                if(image.Parameters != null)
+                    foreach (var pv in image.Parameters)
+                        parmStr.AppendFormat("{0}.", pv);
                 retVal.RefImages = new List<string>()
                 {
                     String.Format("{0}-{1}-init.bmp", retVal.Id, parmStr),
@@ -93,8 +94,6 @@ namespace OmrMarkEngine.Core
 
                 if (!Directory.Exists(saveDirectory))
                     Directory.CreateDirectory(saveDirectory);
-                foreach (var pv in image.Parameters)
-                    parmStr.AppendFormat("{0}.", pv);
                 image.Image.Save(Path.Combine(saveDirectory, string.Format("{0}-{1}-init.bmp", DateTime.Now.ToString("yyyyMMddHHmmss"), parmStr)));
                 
             }

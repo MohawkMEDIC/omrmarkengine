@@ -52,6 +52,9 @@ namespace OmrMarkEngine.Wia
         /// </summary>
         public void ScanAsync(ScannerInfo source)
         {
+            if (source == null)
+                return;
+
             WIA.Device wiaDevice = source.GetDevice();
             // Manager
             WIA.DeviceManager wiaManager = new WIA.DeviceManager();

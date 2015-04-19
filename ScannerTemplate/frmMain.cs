@@ -27,7 +27,6 @@ using OmrMarkEngine.Core.Processor;
 using OmrMarkEngine.Output;
 using OmrMarkEngine.Template;
 using OmrMarkEngine.Template.Design;
-using MarkerEngine.Template.Design;
 using ScannerTemplate.Design;
 using System;
 using System.Collections.Generic;

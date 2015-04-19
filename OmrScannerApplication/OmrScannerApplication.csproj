@@ -47,6 +47,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Solution Items\AForge.Imaging.Formats.dll</HintPath>
     </Reference>
+    <Reference Include="FyfeSoftware.Sketchy.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\FyfeSoftware.Sketchy.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FyfeSoftware.Sketchy.Design">
+      <HintPath>..\Solution Items\FyfeSoftware.Sketchy.Design.dll</HintPath>
+    </Reference>
     <Reference Include="Interop.WIA">
       <HintPath>..\Solution Items\Interop.WIA.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -91,6 +98,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="CENSUS.mxml" />
     <None Include="OmrScannerApplication.licenseheader" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

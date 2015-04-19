@@ -27,7 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarkerEngine.Template.Design
+namespace OmrMarkEngine.Template.Design
 {
     /// <summary>
     /// Represents a shape with an image

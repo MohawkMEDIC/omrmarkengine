@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Output\Design\OutputVisualizationStencil.cs" />
     <Compile Include="Output\OmrAggregateDataOutput.cs" />
     <Compile Include="Output\OmrBarcodeData.cs" />
     <Compile Include="Output\OmrBubbleData.cs" />

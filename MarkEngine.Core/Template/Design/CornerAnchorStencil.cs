@@ -30,7 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarkerEngine.Template.Design
+namespace OmrMarkEngine.Template.Design
 {
     /// <summary>
     /// Scannable area stencil

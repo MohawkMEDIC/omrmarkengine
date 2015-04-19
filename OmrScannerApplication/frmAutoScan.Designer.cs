@@ -45,7 +45,6 @@
             this.bwUpdate = new System.ComponentModel.BackgroundWorker();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.bwPostProcess = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -145,9 +144,9 @@
             // 
             this.imlScan.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imlScan.ImageStream")));
             this.imlScan.TransparentColor = System.Drawing.Color.Transparent;
-            this.imlScan.Images.SetKeyName(0, "dialog-warning.png");
-            this.imlScan.Images.SetKeyName(1, "task-accepted.png");
-            this.imlScan.Images.SetKeyName(2, "appointment-reminder.png");
+            this.imlScan.Images.SetKeyName(0, "appointment-reminder.png");
+            this.imlScan.Images.SetKeyName(1, "dialog-warning.png");
+            this.imlScan.Images.SetKeyName(2, "task-accepted.png");
             // 
             // statusStrip1
             // 
@@ -206,11 +205,6 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // bwPostProcess
-            // 
-            this.bwPostProcess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwPostProcess_DoWork);
-            this.bwPostProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwPostProcess_RunWorkerCompleted);
-            // 
             // frmAutoScan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,7 +248,6 @@
         private System.ComponentModel.BackgroundWorker bwUpdate;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.ComponentModel.BackgroundWorker bwPostProcess;
 
     }
 }
