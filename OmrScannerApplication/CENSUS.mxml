@@ -651,7 +651,7 @@
   <questionBubble id="OmrQuestion647" topLeft="2776,465" bottomLeft="2776,513" topRight="2824,465" bottomRight="2824,513" row="FEMALE" isRequiredForRow="false" behavior="Count" key="OVER 65" value="1" />
   <questionBubble id="OmrQuestion648" topLeft="2840,465" bottomLeft="2840,513" topRight="2888,465" bottomRight="2888,513" row="FEMALE" isRequiredForRow="false" behavior="Count" key="OVER 65" value="1" />
   <script>
-		
+		<![CDATA[
 		// Save the file as CSV format
 		String filePath = Path.Combine("C:\\temp\\censusData.csv");		
 		Trace.TraceInformation("Saving to {0}", filePath);
@@ -663,6 +663,6 @@
 			byte[] data = transform.Transform(page.Template, pageCollection);
 			fs.Write(data, 0, data.Length);
 		}
-		
+		]]>
 	</script>
 </template>

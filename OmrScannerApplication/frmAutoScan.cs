@@ -111,13 +111,11 @@ namespace OmrScannerApplication
                 MessageBox.Show("Please select a valid scanner");
             else
             {
-                this.m_scanEngine.ScanAsync(cboScanners.SelectedItem as ScannerInfo);
                 stsMain.Enabled = true;
                 this.stsMain.Style = ProgressBarStyle.Marquee;
                 lblStatus.Text = "Acquiring Images...";
                 groupBox1.Enabled = false;
-
-
+                this.m_scanEngine.ScanAsync(cboScanners.SelectedItem as ScannerInfo);
                 lblStatus.Text = "Waiting for processing to complete...";
             }
         }
