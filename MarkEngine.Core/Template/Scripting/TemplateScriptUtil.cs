@@ -82,8 +82,12 @@ namespace OmrMarkEngine.Template.Scripting
 
                     foreach (var asmRef in template.Script.Assemblies)
                     {
-                        Assembly.LoadFile(asmRef);
-                        asmOption.ReferencedAssemblies.Add(asmRef);
+                        string asmLocation = asmRef;
+                        if (!Path.IsPathRooted(asmLocation))
+                            asmLocation = Path.Combine(Path.GetDirectoryName(template.FileName), asmLocation);
+
+                        Assembly.LoadFile(asmLocation);
+                        asmOption.ReferencedAssemblies.Add(asmLocation);
                     }
                     // Compile
                     var compileResult = Microsoft.CSharp.CSharpCodeProvider.CreateProvider("CS").CompileAssemblyFromSource(asmOption, scriptTemplate);
