@@ -51,11 +51,11 @@ namespace OmrScannerApplication
         /// </summary>
         private OmrPageOutputCollection m_scannedPages;
         private ScanEngine m_scanEngine = new ScanEngine();
-
+        Dictionary<ListViewItem, Image> m_uiResults = new Dictionary<ListViewItem, Image>();
+        private WaitThreadPool m_threadPool = new WaitThreadPool();
         private object m_lockObject = new object();
 
         
-        private Queue<Byte[]> m_workQueue = new Queue<Byte[]>();
 
         // Auto scan
         public frmAutoScan()
@@ -72,7 +72,7 @@ namespace OmrScannerApplication
         {
 
             // Enqueue the data
-            this.m_workQueue.Enqueue(e.Image);
+            this.m_threadPool.QueueUserWorkItem(ProcessImageWorker, e.Image);
             if (!this.bwUpdate.IsBusy)
                 this.bwUpdate.RunWorkerAsync();
         }
@@ -105,13 +105,19 @@ namespace OmrScannerApplication
         private void btnStart_Click(object sender, EventArgs e)
         {
             this.m_scannedPages = new OmrPageOutputCollection();
+            foreach(var itm in this.m_uiResults)
+            {
+                itm.Value.Dispose();
+                itm.Key.Tag = null;
+            }
+            this.m_uiResults = new Dictionary<ListViewItem, Image>();
             lsvView.Items.Clear();
 
             if (cboScanners.SelectedItem == null)
                 MessageBox.Show("Please select a valid scanner");
             else
             {
-                stsMain.Enabled = true;
+                stsMain.Visible = true;
                 this.stsMain.Style = ProgressBarStyle.Marquee;
                 lblStatus.Text = "Acquiring Images...";
                 groupBox1.Enabled = false;
@@ -130,114 +136,111 @@ namespace OmrScannerApplication
         /// <summary>
         /// Do work
         /// </summary>
-        private void bwUpdate_DoWork(object sender, DoWorkEventArgs e)
+        private void ProcessImageWorker(object state)
         {
     
-            Dictionary<ListViewItem, Image> retVal = new Dictionary<ListViewItem, Image>();
-            e.Result = retVal;
+            ScannedImage scannedImage = null;
+            lock(this.m_lockObject)
+                using (var ms = new MemoryStream((byte[])state))
+                {
+                    var img = Image.FromStream(ms);
+                    img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    scannedImage = new ScannedImage(img);
+                }
+                
+                
+            scannedImage.Analyze();
 
-            // Do work 
-            if(this.m_workQueue.Count > 0)
+            Image original = (Image)new AForge.Imaging.Filters.ResizeNearestNeighbor(scannedImage.Image.Width / 4, scannedImage.Image.Height / 4).Apply((Bitmap)scannedImage.Image);
+
+            // Add an Error entry
+            if(!scannedImage.IsScannable)
             {
-                
-                ScannedImage scannedImage = null;
-                lock(this.m_lockObject)
-                    using (var ms = new MemoryStream(this.m_workQueue.Dequeue()))
-                    {
-                        var img = Image.FromStream(ms);
-                        img.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                        scannedImage = new ScannedImage(img);
-                    }
-                
-                
-                scannedImage.Analyze();
-
-                Image original = (Image)new AForge.Imaging.Filters.ResizeNearestNeighbor(scannedImage.Image.Width / 4, scannedImage.Image.Height / 4).Apply((Bitmap)scannedImage.Image);
-
-                // Add an Error entry
-                if(!scannedImage.IsScannable)
+                ListViewItem lsv = new ListViewItem();
+                lsv.Tag = 2;
+                lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, "Scanned image doesn't appear to be a scannable form."));
+                lock (this.m_lockObject)
+                    this.m_uiResults.Add(lsv, original);
+            }
+            else
+            {
+                Engine engine = new Engine();
+                var templateFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), scannedImage.TemplateName + ".mxml");
+                if(!File.Exists(templateFile))
                 {
                     ListViewItem lsv = new ListViewItem();
-                    lsv.Tag = 2;
-                    lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, "Scanned image doesn't appear to be a scannable form."));
-                    retVal.Add(lsv, original);
+                    lsv.Tag = 0; 
+                    lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, "Template file " + templateFile + " is missing"));
+                    lock(this.m_lockObject)
+                        this.m_uiResults.Add(lsv, original);
+                    return;
                 }
-                else
+
+                // Apply template
+                var template =  OmrTemplate.Load(templateFile);
+                var pageData = engine.ApplyTemplate( 
+                    template, 
+                    scannedImage);
+
+                // Draw the page data
+                ICanvas canvas = new DesignerCanvas();
+                canvas.Add(new OmrMarkEngine.Output.Design.OutputVisualizationStencil(pageData));
+                original.Dispose();
+                original = new Bitmap((int)template.BottomRight.X, (int)template.BottomLeft.Y, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                using (Graphics g = Graphics.FromImage(original))
                 {
-                    Engine engine = new Engine();
-                    var templateFile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), scannedImage.TemplateName + ".mxml");
-                    if(!File.Exists(templateFile))
+                        float width = template.TopRight.X - template.TopLeft.X,
+                        height = template.BottomLeft.Y - template.TopLeft.Y;
+                    g.DrawImage(scannedImage.Image, template.TopLeft.X, template.TopLeft.Y, width, height);
+                    canvas.DrawTo(g);
+                }
+                var oldOriginal = original;
+                original = (Image)new AForge.Imaging.Filters.ResizeNearestNeighbor(scannedImage.Image.Width / 2, scannedImage.Image.Height / 2).Apply((Bitmap)original);
+                oldOriginal.Dispose();
+
+                lock (this.m_lockObject)
+                {
+                    if(pageData.Outcome == OmrScanOutcome.Failure)
                     {
                         ListViewItem lsv = new ListViewItem();
-                        lsv.Tag = 0; 
-                        lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, "Template file " + templateFile + " is missing"));
-                        retVal.Add(lsv, original);
-                        return;
+                        lsv.Tag = 0;
+                        lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, pageData.ErrorMessage));
+                        lock (this.m_lockObject)
+                            this.m_uiResults.Add(lsv, original);
                     }
-
-                    // Apply template
-                    var template =  OmrTemplate.Load(templateFile);
-                    var pageData = engine.ApplyTemplate( 
-                        template, 
-                        scannedImage);
-
-                    // Draw the page data
-                    ICanvas canvas = new DesignerCanvas();
-                    canvas.Add(new OmrMarkEngine.Output.Design.OutputVisualizationStencil(pageData));
-                    original.Dispose();
-                    original = new Bitmap((int)template.BottomRight.X, (int)template.BottomLeft.Y, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                    using (Graphics g = Graphics.FromImage(original))
+                    else
                     {
-                        g.DrawImage(scannedImage.Image, template.TopLeft);
-                        canvas.DrawTo(g);
-                    }
-                    var oldOriginal = original;
-                    original = (Image)new AForge.Imaging.Filters.ResizeNearestNeighbor(scannedImage.Image.Width / 2, scannedImage.Image.Height / 2).Apply((Bitmap)original);
-                    oldOriginal.Dispose();
-
-                    lock (this.m_lockObject)
-                    {
-                        if(pageData.Outcome == OmrScanOutcome.Failure)
-                        {
-                            ListViewItem lsv = new ListViewItem();
-                            lsv.Tag = 0;
-                            lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, pageData.ErrorMessage));
-                            retVal.Add(lsv, original);
-                        }
+                        var validation = pageData.Validate(template);
+                        ListViewItem lsv = new ListViewItem();
+                        lsv.Tag = validation.IsValid ? 2 : 1;
+                        if (!validation.IsValid)
+                            lsv.SubItems.Add(validation.Issues[0]);
                         else
                         {
-                            var validation = pageData.Validate(template);
-                            ListViewItem lsv = new ListViewItem();
-                            lsv.Tag = validation.IsValid ? 2 : 1;
-                            if (!validation.IsValid)
-                                lsv.SubItems.Add(validation.Issues[0]);
-                            else
+                            // Run script
+                            try
                             {
-                                // Run script
-                                try
-                                {
-                                    new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(template, pageData);
-                                    lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, this.MakeSummary(pageData)));
-                                }
-                                catch(Exception ex)
-                                {
-                                    lsv.Tag = 1;
-                                    StringBuilder sb = new StringBuilder(ex.Message);
-                                    while(ex.InnerException != null)
-                                    {
-                                        ex = ex.InnerException;
-                                        sb.AppendFormat(": {0}", ex.Message);
-                                    }
-                                    lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, ex.Message));
-                                }
+                                new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(template, pageData);
+                                lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, this.MakeSummary(pageData)));
                             }
-                            retVal.Add(lsv, original);
+                            catch(Exception ex)
+                            {
+                                lsv.Tag = 1;
+                                StringBuilder sb = new StringBuilder(ex.Message);
+                                while(ex.InnerException != null)
+                                {
+                                    ex = ex.InnerException;
+                                    sb.AppendFormat(": {0}", ex.Message);
+                                }
+                                lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, ex.Message));
+                            }
                         }
-                        this.m_scannedPages.Pages.Add(pageData);
+                        lock (this.m_lockObject)
+                            this.m_uiResults.Add(lsv, original);
                     }
+                    this.m_scannedPages.Pages.Add(pageData);
                 }
             }
-
            
         }
 
@@ -282,14 +285,17 @@ namespace OmrScannerApplication
             return sb.ToString();
         }
 
+        
         /// <summary>
         /// Completed, add the data
         /// </summary>
         private void bwUpdate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Dictionary<ListViewItem, Image> result = e.Result as Dictionary<ListViewItem, Image>;
-            foreach(var itm in result)
+            
+            foreach(var itm in this.m_uiResults)
             {
+                if (!(itm.Key.Tag is Int32))
+                    continue;
                 //imlScan.Images.Add(itm.Value);
                 var lsv= lsvView.Items.Add(String.Empty, (int)itm.Key.Tag);
                 lsv.SubItems.Add(itm.Key.SubItems[1].Text);
@@ -297,15 +303,20 @@ namespace OmrScannerApplication
 
             }
 
-            if (this.m_workQueue.Count > 0)
-                this.bwUpdate.RunWorkerAsync();
-            else
-                groupBox1.Enabled = true;
+            groupBox1.Enabled = true;
+            lblStatus.Text = "Complete";
+            stsMain.Visible = false;
         }
 
+        /// <summary>
+        /// Do work
+        /// </summary>
+        private void bwUpdate_DoWork(object sender, DoWorkEventArgs e)
+        {
 
-
-
+            this.m_threadPool.WaitOne();
+            
+        }
 
     }
 }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace OmrMarkEngine.Template.Scripting
 {
@@ -79,7 +80,7 @@ namespace OmrMarkEngine.Template.Scripting
                     asmOption.ReferencedAssemblies.Add(typeof(String).Assembly.Location);
                     asmOption.ReferencedAssemblies.Add(typeof(System.Linq.Enumerable).Assembly.Location);
                     asmOption.ReferencedAssemblies.Add(typeof(OmrTemplate).Assembly.Location);
-
+                    asmOption.ReferencedAssemblies.Add(typeof(DataContractAttribute).Assembly.Location);
                     foreach (var asmRef in template.Script.Assemblies)
                     {
                         Assembly.LoadFile(asmRef);

@@ -71,14 +71,15 @@ namespace OmrMarkEngine.Wia
                         wiaItem.Properties["6147"].set_Value(dpi);
                         wiaItem.Properties["6148"].set_Value(dpi);
 
-                        var imageFile = (ImageFile)(new CommonDialog()).ShowTransfer(wiaItem, "{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}", false); //wiaItem.Transfer("{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}") as WIA.ImageFile;
+//                        var imageFile = (ImageFile)(new CommonDialog()).ShowTransfer(wiaItem, "{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}", false); //wiaItem.Transfer("{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}") as WIA.ImageFile;
 
-//                        var imageFile = wiaItem.Transfer("{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}") as WIA.ImageFile;
+                        var imageFile = wiaItem.Transfer("{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}") as WIA.ImageFile;
 
                         if (this.ScanCompleted != null)
                             this.ScanCompleted(this, new ScanCompletedEventArgs(imageFile.FileData.get_BinaryData()));
+                        
                     }
-                    catch (System.Runtime.InteropServices.COMException)
+                    catch (Exception)
                     {
                         break;
                     }

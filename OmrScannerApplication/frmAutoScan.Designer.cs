@@ -171,6 +171,7 @@
             this.stsMain.Name = "stsMain";
             this.stsMain.Size = new System.Drawing.Size(100, 16);
             this.stsMain.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.stsMain.Visible = false;
             // 
             // bwUpdate
             // 
