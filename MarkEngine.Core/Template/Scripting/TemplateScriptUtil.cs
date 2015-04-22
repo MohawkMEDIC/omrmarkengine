@@ -79,6 +79,7 @@ namespace OmrMarkEngine.Template.Scripting
                     asmOption.ReferencedAssemblies.Add(typeof(String).Assembly.Location);
                     asmOption.ReferencedAssemblies.Add(typeof(System.Linq.Enumerable).Assembly.Location);
                     asmOption.ReferencedAssemblies.Add(typeof(OmrTemplate).Assembly.Location);
+                    asmOption.ReferencedAssemblies.Add(typeof(System.Runtime.Serialization.DataContractAttribute).Assembly.Location);
 
                     foreach (var asmRef in template.Script.Assemblies)
                     {

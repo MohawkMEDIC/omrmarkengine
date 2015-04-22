@@ -4,18 +4,20 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace OmrMarkEngine.Template.Scripting.Util
 {
     /// <summary>
     /// Represents a utility for calling rest functions and interpreting the results
     /// </summary>
-    
     public class RestUtil
     {
 
@@ -24,13 +26,39 @@ namespace OmrMarkEngine.Template.Scripting.Util
         /// </summary>
         private Uri m_baseUri;
 
+        // Trusted certs
+        private static List<String> s_trustedCerts = new List<String>();
 
         /// <summary>
         /// Creates a new instance of the rest utility
         /// </summary>
         public RestUtil(Uri baseUri)
         {
+            ServicePointManager.ServerCertificateValidationCallback = RestCertificateValidation;
             this.m_baseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Validate the REST certificate
+        /// </summary>
+        static bool RestCertificateValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors error)
+        {
+            if (certificate == null || chain == null)
+                return false;
+            else
+            {
+                var valid = s_trustedCerts.Contains(certificate.Subject);
+                if(!valid && (chain.ChainStatus.Length > 0 || error != SslPolicyErrors.None))
+                    if(MessageBox.Show(String.Format("The remote certificate is not trusted. The error was {0}. The certificate is: \r\n{1}\r\nWould you like to temporarily trust this certificate?", error, certificate.Subject), "Certificate Error", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+                        return false;
+                    else
+                        s_trustedCerts.Add(certificate.Subject);
+
+                return true;
+                //isValid &= chain.ChainStatus.Length == 0;
+            }
+
+
         }
 
         /// <summary>
