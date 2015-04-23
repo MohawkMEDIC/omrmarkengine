@@ -117,7 +117,7 @@ namespace OmrMarkEngine.Template.Scripting.Util
                 
                 var serializer = new DataContractJsonSerializer(typeof(T));
                 T retVal = (T)serializer.ReadObject(response.GetResponseStream());
-                Thread.Sleep(100); // Yeah, you're reading that right... Idk why but GIIS WS don't like to be called too quickly
+                //Thread.Sleep(100); // Yeah, you're reading that right... Idk why but GIIS WS don't like to be called too quickly
                 return retVal;
             }
             catch(Exception e)
