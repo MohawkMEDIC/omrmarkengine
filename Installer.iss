@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "OMR Mark Engine"
-#define MyAppVersion "0.8.2"
+#define MyAppVersion "0.8.5"
 #define MyAppPublisher "Fyfe Software Inc."
 #define MyAppURL "http://omrmarkengine.codeplex.com"
 #define MyAppExeName "TemplateDesigner.exe"
@@ -66,9 +66,9 @@ Source: ".\OmrScannerApplication\bin\Release\OmrScannerApplication.exe.config"; 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\OMR Template Designer"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\OMR Template Designer"; Filename: "{app}\TemplateDesigner.exe"
 Name: "{group}\OMR Bulk Scanner"; Filename: "{app}\OmrScannerApplication.exe"
 
 [Run]
-Filename: "{app}\OMR Template Designer"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\TemplateDesigner.exe"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 

@@ -200,6 +200,7 @@ namespace ScannerTemplate
             }
             else if (e.ModificationType == FyfeSoftware.Sketchy.Core.Collections.CollectionModificationType.Cleared)
                 this.SelectRootImageProperties();
+            skHost1.Focus();
 
         }
 
