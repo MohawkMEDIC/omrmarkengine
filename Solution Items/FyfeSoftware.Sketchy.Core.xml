@@ -813,6 +813,26 @@
             <param name="shape">The shape to be edited</param>
             <returns>A state object that is to be interpreted by the shape object</returns>
         </member>
+        <member name="T:FyfeSoftware.Sketchy.Core.IShapeSelectionManagerCanvas">
+            <summary>
+            Represents a canvas which manages selected shapeds
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShapeSelectionManagerCanvas.ClearSelection">
+            <summary>
+            Clear the selection
+            </summary>
+        </member>
+        <member name="M:FyfeSoftware.Sketchy.Core.IShapeSelectionManagerCanvas.SelectShape(FyfeSoftware.Sketchy.Core.IInteractiveShape)">
+            <summary>
+            Select the specified shaped
+            </summary>
+        </member>
+        <member name="P:FyfeSoftware.Sketchy.Core.IShapeSelectionManagerCanvas.SelectedShapes">
+            <summary>
+            Gets the selected shapes
+            </summary>
+        </member>
         <member name="T:FyfeSoftware.Sketchy.Core.IStencil">
             <summary>
             A stencil represents a collection of primitive <see cref="T:IShape"/> objects that 

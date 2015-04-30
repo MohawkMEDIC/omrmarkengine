@@ -73,7 +73,6 @@ namespace OmrMarkEngine.Template.Scripting
                         CompilerOptions = "/d:TRACE /d:DEBUG",
                         IncludeDebugInformation= true
                     };
-
                     // Add assemblies
 
                     asmOption.ReferencedAssemblies.Add(typeof(INotifyPropertyChanged).Assembly.Location);
@@ -121,10 +120,10 @@ namespace OmrMarkEngine.Template.Scripting
                     errField.SetValue(null, null);
                     runMethod.Invoke(null, new Object[] { processedOutput });
                     if (errField.GetValue(null) != null)
-                        throw new InvalidOperationException(errField.GetValue(null).ToString());
+                        throw new ScriptingErrorException(errField.GetValue(null).ToString());
                 }
             }
-            catch(Exception e)
+            catch
             {
                 throw;
             }

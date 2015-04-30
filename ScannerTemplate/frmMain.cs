@@ -44,6 +44,7 @@ using System.Xml.Serialization;
 using OmrMarkEngine.Wia;
 using OmrMarkEngine.Output.Transforms;
 using System.Reflection;
+using OmrMarkEngine.Template.Scripting;
 
 namespace ScannerTemplate
 {
@@ -761,6 +762,10 @@ namespace ScannerTemplate
                     Application.DoEvents();
                     new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(this.m_currentTemplate, sel.Tag as OmrPageOutput);
                     sel.SubItems[2].Text = "";
+                }
+                catch(ScriptingErrorException ex)
+                {
+                    sel.SubItems[2].Text = "Error: " + ex.Message;
                 }
                 catch (Exception ex)
                 {
