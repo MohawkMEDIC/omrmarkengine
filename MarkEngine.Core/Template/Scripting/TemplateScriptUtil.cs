@@ -103,6 +103,7 @@ namespace OmrMarkEngine.Template.Scripting
                     s_compiledScripts.Add(template.Id, asmToRun);
                 }
 
+            
             // Now we need to run the script
             var templateScript = asmToRun.GetType("OmrScannerApplication.Scripting.Script");
             if (templateScript == null)

@@ -45,6 +45,7 @@ using OmrMarkEngine.Wia;
 using OmrMarkEngine.Output.Transforms;
 using System.Reflection;
 using OmrMarkEngine.Template.Scripting;
+using TemplateDesigner;
 
 namespace ScannerTemplate
 {
@@ -779,6 +780,11 @@ namespace ScannerTemplate
                 }
 
             }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new frmAbout().ShowDialog();
         }
 
 
