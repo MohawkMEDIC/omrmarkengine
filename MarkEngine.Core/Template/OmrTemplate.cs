@@ -43,26 +43,20 @@ namespace OmrMarkEngine.Template
         // Backing fields
         private String m_sourcePath;
         private Image m_imageSource;
+        private const string MAX_VERSION = "0.8.0.0";
 
-        public String Version
-        {
-            get
-            {
-                return "0.8.0.0";
-            }
-            set
-            {
-                if(new Version(value) > new Version(this.Version))
-                {
-                    throw new TemplateVersionException(value, this.Version);
-                }
-            }
-        }
+        /// <summary>
+        /// Gets the version of the template
+        /// </summary>
+        [XmlAttribute("version")]
+        public String Version { get; set; }
+
         /// <summary>
         /// Creates a new Omr template
         /// </summary>
         public OmrTemplate()
         {
+            this.Version = MAX_VERSION;
             this.ScanThreshold = 120;
             this.Id = "MyForm";
             this.Fields = new List<OmrQuestionField>();
@@ -157,6 +151,9 @@ namespace OmrMarkEngine.Template
             {
                 XmlSerializer xsz = new XmlSerializer(typeof(OmrTemplate));
                 var retVal = xsz.Deserialize(fs) as OmrTemplate;
+                if (new Version(retVal.Version) > new Version(MAX_VERSION))
+                    throw new TemplateVersionException(retVal.Version, MAX_VERSION);
+
                 retVal.FileName = fileName;
                 return retVal;
             }
