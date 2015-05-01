@@ -92,6 +92,7 @@
     <Compile Include="Template\Scripting\RestUtil.cs" />
     <Compile Include="Template\Scripting\ScriptingErrorException.cs" />
     <Compile Include="Template\Scripting\TemplateScriptUtil.cs" />
+    <Compile Include="Template\TemplateVersionException.cs" />
     <Compile Include="Wia\ScanCompletedEventArgs.cs" />
     <Compile Include="Wia\ScanEngine.cs" />
     <Compile Include="Wia\ScannerInfo.cs" />

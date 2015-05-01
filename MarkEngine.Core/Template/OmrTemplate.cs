@@ -44,6 +44,20 @@ namespace OmrMarkEngine.Template
         private String m_sourcePath;
         private Image m_imageSource;
 
+        public String Version
+        {
+            get
+            {
+                return "0.8.0.0";
+            }
+            set
+            {
+                if(new Version(value) > new Version(this.Version))
+                {
+                    throw new TemplateVersionException(value, this.Version);
+                }
+            }
+        }
         /// <summary>
         /// Creates a new Omr template
         /// </summary>
