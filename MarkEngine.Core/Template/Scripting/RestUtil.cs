@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OmrMarkEngine.Core.Template.Scripting.Forms;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Net.Security;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -28,6 +30,9 @@ namespace OmrMarkEngine.Template.Scripting.Util
 
         // Trusted certs
         private static List<String> s_trustedCerts = new List<String>();
+
+        private static String s_username = null;
+        private static String s_password = null;
 
         /// <summary>
         /// Creates a new instance of the rest utility
@@ -100,31 +105,54 @@ namespace OmrMarkEngine.Template.Scripting.Util
         public T Get<T>(String resourcePath, params KeyValuePair<String,Object>[] queryParms)
         {
 
-            try
-            {
-                StringBuilder queryBuilder = new StringBuilder();
-                if(queryParms != null)
-                    foreach(var qp in queryParms)
-                        queryBuilder.AppendFormat("{0}={1}&", qp.Key, qp.Value);
-                if(queryBuilder.Length > 0)
-                    queryBuilder.Remove(queryBuilder.Length - 1, 1);
-                Uri requestUri = new Uri(String.Format("{0}/{1}?{2}", this.m_baseUri, resourcePath, queryBuilder));
+            int retry = 0;
 
-                WebRequest request = WebRequest.Create(requestUri);
-                request.Timeout = 600000;
-                request.Method = "GET";
-                var response = request.GetResponse();
-                
-                var serializer = new DataContractJsonSerializer(typeof(T));
-                T retVal = (T)serializer.ReadObject(response.GetResponseStream());
-                //Thread.Sleep(100); // Yeah, you're reading that right... Idk why but GIIS WS don't like to be called too quickly
-                return retVal;
-            }
-            catch(Exception e)
+            while (retry++ < 3)
             {
-                throw;
-            }
+                try
+                {
+                    StringBuilder queryBuilder = new StringBuilder();
+                    if (queryParms != null)
+                        foreach (var qp in queryParms)
+                            queryBuilder.AppendFormat("{0}={1}&", qp.Key, qp.Value);
+                    if (queryBuilder.Length > 0)
+                        queryBuilder.Remove(queryBuilder.Length - 1, 1);
+                    Uri requestUri = new Uri(String.Format("{0}/{1}?{2}", this.m_baseUri, resourcePath, queryBuilder));
 
+                    WebRequest request = WebRequest.Create(requestUri);
+                    request.Timeout = 600000;
+                    request.Method = "GET";
+                    if(!String.IsNullOrEmpty(s_username))
+                        request.Headers.Add("Authorization", String.Format("Basic {0}", Convert.ToBase64String(Encoding.UTF8.GetBytes(String.Format("{0}:{1}", s_username, s_password)))));
+                    var response = request.GetResponse();
+
+                    var serializer = new DataContractJsonSerializer(typeof(T));
+                    T retVal = (T)serializer.ReadObject(response.GetResponseStream());
+                    //Thread.Sleep(100); // Yeah, you're reading that right... Idk why but GIIS WS don't like to be called too quickly
+                    return retVal;
+                }
+                catch(WebException e)
+                {
+                    if ((e.Response as HttpWebResponse).StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        frmAuthenticate authForm = new frmAuthenticate();
+                        if (authForm.ShowDialog() == DialogResult.OK)
+                        {
+                            s_username = authForm.Username;
+                            s_password = authForm.Password;
+                        }
+                        else
+                            throw new SecurityException("Authorization for service failed!");
+                    }
+                    else
+                        throw;
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+            }
+            throw new SecurityException("Authorization for service failed!");
         }
 
         /// <summary>
