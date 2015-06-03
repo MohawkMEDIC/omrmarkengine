@@ -86,11 +86,11 @@ namespace OmrMarkEngine.Output.Transforms
                                 OmrBubbleData[] nonGroupedAnswer = pg.Details.OfType<OmrBubbleData>().Where(o => o.Key == q).ToArray();
 
                                 if (aggregate.Length > 0)
-                                    sw.Write(",\"{0}\"", this.MakeString(aggregate));
+                                    sw.Write(",{0}", this.MakeString(aggregate));
                                 else if (answerBubble.Length > 0)
-                                    sw.Write(",\"{0}\"", this.MakeString(answerBubble));
+                                    sw.Write(",{0}", this.MakeString(answerBubble));
                                 else if (nonGroupedAnswer.Length > 0)
-                                    sw.Write(",\"{0}\"", this.MakeString(nonGroupedAnswer));
+                                    sw.Write(",{0}", this.MakeString(nonGroupedAnswer));
                                 else
                                     sw.Write(",");
                             }
@@ -117,7 +117,11 @@ namespace OmrMarkEngine.Output.Transforms
             foreach (var t in answer)
                 retVal.AppendFormat("{0}|", t);
             retVal.Remove(retVal.Length - 1, 1);
-            return retVal.ToString();
+            decimal tint;
+            if (Decimal.TryParse(retVal.ToString(), out tint))
+                return retVal.ToString();
+            else
+                return retVal.ToString();
         }
     }
 }
