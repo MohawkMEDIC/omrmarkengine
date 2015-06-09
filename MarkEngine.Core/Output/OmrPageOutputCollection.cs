@@ -58,5 +58,17 @@ namespace OmrMarkEngine.Output
                 new XmlSerializer(typeof(OmrPageOutputCollection)).Serialize(fs, this);
 
         }
+
+        /// <summary>
+        /// Load the file
+        /// </summary>
+        public static OmrPageOutputCollection Load(string filename)
+        {
+            using(FileStream fs = File.OpenRead(filename))
+            {
+                XmlSerializer xsz = new XmlSerializer(typeof(OmrPageOutputCollection));
+                return xsz.Deserialize(fs) as OmrPageOutputCollection;
+            }
+        }
     }
 }
