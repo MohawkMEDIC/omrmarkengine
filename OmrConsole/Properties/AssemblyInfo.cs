@@ -15,7 +15,7 @@
  * the License.
  * 
  * Author: Justin
- * Date: 4-16-2015
+ * Date: 6-12-2015
  */
 
 using System.Reflection;
@@ -25,12 +25,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Optical Mark Engine Core")]
-[assembly: AssemblyDescription("Optical Mark Engine Core")]
+[assembly: AssemblyTitle("OmrConsole")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Fyfe Software Inc.")]
-[assembly: AssemblyProduct("Optical Mark Engine")]
-[assembly: AssemblyCopyright("Copyright ©  2015, Fyfe Software Inc.")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("OmrConsole")]
+[assembly: AssemblyCopyright("Copyright ©  2015 Justin Fyfe")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -40,7 +40,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("36761b26-ce4f-4e81-94f0-5605f2d41ec7")]
+[assembly: Guid("f7297e65-a7c9-4b79-9eac-e52b90e654b5")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -52,5 +52,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.8.9.5")]
-[assembly: AssemblyFileVersion("0.8.9.5")]
+[assembly: AssemblyVersion("0.8.9.0")]
+[assembly: AssemblyFileVersion("0.8.9.0")]
