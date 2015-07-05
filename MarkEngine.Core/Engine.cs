@@ -135,41 +135,42 @@ namespace OmrMarkEngine.Core
                     }
                 }
 
-
+               
                 // Now convert to Grayscale
                 GrayscaleY grayFilter = new GrayscaleY();
                 var gray = grayFilter.Apply(bmp);
                 bmp.Dispose();
                 bmp = gray;
 
+                if (this.SaveIntermediaryImages)
+                    bmp.Save(Path.Combine(saveDirectory, string.Format("{0}-{1}-gs.bmp", DateTime.Now.ToString("yyyyMMddHHmmss"), parmStr)));
+
                 // Prepare answers
                 Dictionary<OmrQuestionField, OmrOutputData> hitFields = new Dictionary<OmrQuestionField, OmrOutputData>();
                 BarcodeReader barScan = new BarcodeReader();
                 barScan.Options.TryHarder = false;
                 barScan.TryInverted = true;
-                foreach(var itm in template.Fields.Where(o=>o is OmrBarcodeField))
+                barScan.Options.PureBarcode = false;
+                foreach (var itm in template.Fields.Where(o => o is OmrBarcodeField))
                 {
                     PointF position = itm.TopLeft;
                     SizeF size = new SizeF(itm.TopRight.X - itm.TopLeft.X, itm.BottomLeft.Y - itm.TopLeft.Y);
                     using (var areaOfInterest = new Crop(new Rectangle((int)position.X, (int)position.Y, (int)size.Width, (int)size.Height)).Apply(bmp))
-                        {
-                            // Scan the barcode
-                            var result = barScan.Decode(areaOfInterest);
-                            if (result != null)
-                                hitFields.Add(itm, new OmrBarcodeData()
-                                {
-                                    BarcodeData = result.Text,
-                                    Format = result.BarcodeFormat,
-                                    Id = itm.Id,
-                                    TopLeft = new PointF(result.ResultPoints[0].X + position.X, result.ResultPoints[0].Y + position.Y),
-                                    BottomRight = new PointF(result.ResultPoints[1].X + position.X, result.ResultPoints[0].Y + position.Y + 10)
-                                });
-                        }
+                    {
+                        // Scan the barcode
+                        var result = barScan.Decode(areaOfInterest);
+                        if (result != null)
+                            hitFields.Add(itm, new OmrBarcodeData()
+                            {
+                                BarcodeData = result.Text,
+                                Format = result.BarcodeFormat,
+                                Id = itm.Id,
+                                TopLeft = new PointF(result.ResultPoints[0].X + position.X, result.ResultPoints[0].Y + position.Y),
+                                BottomRight = new PointF(result.ResultPoints[1].X + position.X, result.ResultPoints[0].Y + position.Y + 10)
+                            });
+                    }
 
                 }
-
-                if (this.SaveIntermediaryImages)
-                    bmp.Save(Path.Combine(saveDirectory, string.Format("{0}-{1}-gs.bmp", DateTime.Now.ToString("yyyyMMddHHmmss"), parmStr)));
 
                 // Now binarize
                 Threshold binaryThreshold = new Threshold(template.ScanThreshold);
@@ -190,6 +191,7 @@ namespace OmrMarkEngine.Core
 
                 if (this.SaveIntermediaryImages)
                     bmp.Save(Path.Combine(saveDirectory, string.Format("{0}-{1}-inv.bmp", DateTime.Now.ToString("yyyyMMddHHmmss"), parmStr)));
+
 
                 // Crop out areas of interest
                 List<KeyValuePair<OmrQuestionField, Bitmap>> areasOfInterest = new List<KeyValuePair<OmrQuestionField, Bitmap>>();
