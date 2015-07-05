@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "OMR Mark Engine"
-#define MyAppVersion "0.8.5"
+#define MyAppVersion "0.8.10"
 #define MyAppPublisher "Fyfe Software Inc."
 #define MyAppURL "http://omrmarkengine.codeplex.com"
 #define MyAppExeName "TemplateDesigner.exe"
@@ -34,6 +34,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
+Source: ".\OmrConsole\bin\Release\OmrConsole.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\OmrConsole\bin\Release\MohawkCollege.Util.Console.Parameters.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".\ScannerTemplate\bin\Release\TemplateDesigner.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".\ScannerTemplate\bin\Release\AForge.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".\ScannerTemplate\bin\Release\AForge.Imaging.dll"; DestDir: "{app}"; Flags: ignoreversion

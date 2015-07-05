@@ -1,6 +1,6 @@
 ﻿/* 
  * Optical Mark Recognition 
- * Copyright 2015 Justin Fyfe
+ * Copyright 2015, Justin Fyfe
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -57,6 +57,18 @@ namespace OmrMarkEngine.Output
             using (FileStream fs = File.Create(fileName))
                 new XmlSerializer(typeof(OmrPageOutputCollection)).Serialize(fs, this);
 
+        }
+
+        /// <summary>
+        /// Load the file
+        /// </summary>
+        public static OmrPageOutputCollection Load(string filename)
+        {
+            using(FileStream fs = File.OpenRead(filename))
+            {
+                XmlSerializer xsz = new XmlSerializer(typeof(OmrPageOutputCollection));
+                return xsz.Deserialize(fs) as OmrPageOutputCollection;
+            }
         }
     }
 }

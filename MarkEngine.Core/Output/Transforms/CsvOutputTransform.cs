@@ -1,4 +1,23 @@
-﻿using System;
+﻿/* 
+ * Optical Mark Recognition 
+ * Copyright 2015, Justin Fyfe
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ * 
+ * Author: Justin
+ * Date: 4-18-2015
+ */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -86,11 +105,11 @@ namespace OmrMarkEngine.Output.Transforms
                                 OmrBubbleData[] nonGroupedAnswer = pg.Details.OfType<OmrBubbleData>().Where(o => o.Key == q).ToArray();
 
                                 if (aggregate.Length > 0)
-                                    sw.Write(",\"{0}\"", this.MakeString(aggregate));
+                                    sw.Write(",{0}", this.MakeString(aggregate));
                                 else if (answerBubble.Length > 0)
-                                    sw.Write(",\"{0}\"", this.MakeString(answerBubble));
+                                    sw.Write(",{0}", this.MakeString(answerBubble));
                                 else if (nonGroupedAnswer.Length > 0)
-                                    sw.Write(",\"{0}\"", this.MakeString(nonGroupedAnswer));
+                                    sw.Write(",{0}", this.MakeString(nonGroupedAnswer));
                                 else
                                     sw.Write(",");
                             }
@@ -98,9 +117,11 @@ namespace OmrMarkEngine.Output.Transforms
                             sw.WriteLine();
                         }
                     }
+                    sw.Flush();
+                    return ms.ToArray();
+
                 }
 
-                return ms.ToArray();
             }
             // Get the header
         }
@@ -117,7 +138,11 @@ namespace OmrMarkEngine.Output.Transforms
             foreach (var t in answer)
                 retVal.AppendFormat("{0}|", t);
             retVal.Remove(retVal.Length - 1, 1);
-            return retVal.ToString();
+            decimal tint;
+            if (Decimal.TryParse(retVal.ToString(), out tint))
+                return retVal.ToString();
+            else
+                return retVal.ToString();
         }
     }
 }

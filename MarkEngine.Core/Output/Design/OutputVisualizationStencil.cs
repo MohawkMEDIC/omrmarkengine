@@ -1,5 +1,5 @@
 ﻿/* 
- * Optical Mark Recognition Engine
+ * Optical Mark Recognition 
  * Copyright 2015, Justin Fyfe
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -15,7 +15,7 @@
  * the License.
  * 
  * Author: Justin
- * Date: 4-16-2015
+ * Date: 4-20-2015
  */
 
 using FyfeSoftware.Sketchy.Core.Primitives;

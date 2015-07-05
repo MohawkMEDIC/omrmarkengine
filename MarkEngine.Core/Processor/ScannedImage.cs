@@ -1,6 +1,6 @@
 ﻿/* 
  * Optical Mark Recognition 
- * Copyright 2015 Justin Fyfe
+ * Copyright 2015, Justin Fyfe
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -263,7 +263,7 @@ namespace OmrMarkEngine.Core.Processor
             float dy = this.m_topRight.Y - this.m_topLeft.Y,
                 dx = this.m_topRight.X - this.m_topLeft.X;
             double offsetAngle = Math.Tan(dy / dx);
-            RotateBicubic rotate = new RotateBicubic(offsetAngle * (180 / Math.PI), false);
+            RotateBicubic rotate = new RotateBicubic(offsetAngle * (180 / Math.PI), true);
             return rotate.Apply(this.m_bitmap);
         }
 
@@ -327,7 +327,7 @@ namespace OmrMarkEngine.Core.Processor
                 dx = this.m_topRight.X - this.m_topLeft.X;
 
             double offsetAngle = Math.Tan(dy / dx);
-            RotateBicubic rotate = new RotateBicubic(offsetAngle * (180 / Math.PI), false);
+            RotateBilinear rotate = new RotateBilinear(offsetAngle * (180 / Math.PI), true);
             var bmp = rotate.Apply(this.m_bitmap);
             this.m_bitmap.Dispose();
             this.m_bitmap = bmp;
