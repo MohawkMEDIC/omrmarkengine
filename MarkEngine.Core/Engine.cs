@@ -109,9 +109,13 @@ namespace OmrMarkEngine.Core
                 float width = template.TopRight.X - template.TopLeft.X,
                     height = template.BottomLeft.Y - template.TopLeft.Y;
 
+
                 // Translate to original
                 using (Graphics g = Graphics.FromImage(bmp))
-                    g.DrawImage(image.Image, template.TopLeft.X, template.TopLeft.Y, width, height);
+                {
+                    ResizeBicubic bc = new ResizeBicubic((int)width, (int)height);
+                    g.DrawImage(bc.Apply((Bitmap)image.Image), template.TopLeft.X, template.TopLeft.Y);
+                }
 
                 if (this.SaveIntermediaryImages)
                     bmp.Save(Path.Combine(saveDirectory, string.Format("{0}-{1}-tx.bmp", DateTime.Now.ToString("yyyyMMddHHmmss"), parmStr)));
@@ -148,7 +152,7 @@ namespace OmrMarkEngine.Core
                 // Prepare answers
                 Dictionary<OmrQuestionField, OmrOutputData> hitFields = new Dictionary<OmrQuestionField, OmrOutputData>();
                 BarcodeReader barScan = new BarcodeReader();
-                barScan.Options.TryHarder = false;
+                barScan.Options.TryHarder = true;
                 barScan.TryInverted = true;
                 barScan.Options.PureBarcode = false;
                 foreach (var itm in template.Fields.Where(o => o is OmrBarcodeField))
