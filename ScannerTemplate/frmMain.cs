@@ -448,7 +448,7 @@ namespace ScannerTemplate
                 {
                     // Copy the template data
                     var tData = copyData.Clone() as OmrQuestionField;
-                    tData.Id = "OmrQuestion" + this.m_currentTemplate.Fields.Count;
+                    tData.Id = Guid.NewGuid().ToString();
 
                     // Constructor
                     var shp = this.m_canvas.FindShape(copyData.Id);

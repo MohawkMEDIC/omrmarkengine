@@ -53,6 +53,8 @@ namespace OmrMarkEngine.Template.Scripting.Util
         private static String s_username = null;
         private static String s_password = null;
 
+        public String GetCurrentUserName { get { return s_username; } }
+
         /// <summary>
         /// Creates a new instance of the rest utility
         /// </summary>
@@ -88,35 +90,48 @@ namespace OmrMarkEngine.Template.Scripting.Util
         /// <summary>
         /// Get the specified resource contents
         /// </summary>
-        public T Post<T>(String resourcePath, params KeyValuePair<String, Object>[] parms)
+        public void Post<T>(String resourcePath, T data)
         {
-
-            try
+            int retry = 0;
+            while (retry++ < 3)
             {
-                Uri requestUri = new Uri(String.Format("{0}/{1}", this.m_baseUri, resourcePath));
-                WebRequest request = WebRequest.Create(requestUri);
-                request.Method = "POST";
-                request.ContentType = "application/json";
-                using(StreamWriter sw = new StreamWriter(request.GetRequestStream()))
+                try
                 {
-                    sw.WriteLine("{");
-                    foreach (var itm in parms)
-                        sw.WriteLine("\t{0} : '{1}', ", itm.Key, itm.Value);
-                    sw.WriteLine("\t\"isActive\" : true");
-                    sw.WriteLine("}");
+                    Uri requestUri = new Uri(String.Format("{0}/{1}", this.m_baseUri, resourcePath));
+                    WebRequest request = WebRequest.Create(requestUri);
+                    request.Method = "POST";
+                    request.ContentType = "application/json";
+
+                    if (!String.IsNullOrEmpty(s_username))
+                        request.Headers.Add("Authorization", String.Format("Basic {0}", Convert.ToBase64String(Encoding.UTF8.GetBytes(String.Format("{0}:{1}", s_username, s_password)))));
+
+                    var serializer = new DataContractJsonSerializer(typeof(T));
+                    serializer.WriteObject(request.GetRequestStream(), data);
+                    var response = request.GetResponse();
+                    return;
                 }
-                //serializer.WriteObject(request.GetRequestStream(), data);
-                var response = request.GetResponse();
-
-                var serializer = new DataContractJsonSerializer(typeof(T));
-                T retVal = (T)serializer.ReadObject(response.GetResponseStream());
-                return retVal;
+                catch (WebException e)
+                {
+                    if ((e.Response as HttpWebResponse).StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        frmAuthenticate authForm = new frmAuthenticate();
+                        if (authForm.ShowDialog() == DialogResult.OK)
+                        {
+                            s_username = authForm.Username;
+                            s_password = authForm.Password;
+                        }
+                        else
+                            throw new SecurityException("Authorization for service failed!");
+                    }
+                    else
+                        throw;
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                throw;
-            }
-
+            throw new SecurityException("Authorization for service failed!");
         }
         /// <summary>
         /// Get the specified resource contents

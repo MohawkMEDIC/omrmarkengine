@@ -152,9 +152,13 @@ namespace OmrMarkEngine.Core
                 // Prepare answers
                 Dictionary<OmrQuestionField, OmrOutputData> hitFields = new Dictionary<OmrQuestionField, OmrOutputData>();
                 BarcodeReader barScan = new BarcodeReader();
+                barScan.Options.UseCode39ExtendedMode = true;
+                barScan.Options.UseCode39RelaxedExtendedMode = true;
                 barScan.Options.TryHarder = true;
                 barScan.TryInverted = true;
                 barScan.Options.PureBarcode = false;
+                barScan.AutoRotate = true;
+                
                 foreach (var itm in template.Fields.Where(o => o is OmrBarcodeField))
                 {
                     PointF position = itm.TopLeft;
@@ -163,6 +167,8 @@ namespace OmrMarkEngine.Core
                     {
                         // Scan the barcode
                         var result = barScan.Decode(areaOfInterest);
+                        
+                            
                         if (result != null)
                             hitFields.Add(itm, new OmrBarcodeData()
                             {
