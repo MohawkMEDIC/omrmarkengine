@@ -158,7 +158,7 @@ namespace OmrMarkEngine.Core.Processor
                 Blob[] blobs = blobCounter.GetObjectsInformation();
                 SimpleShapeChecker shapeChecker = new SimpleShapeChecker();
                 List<AForge.Point> controlPoints = new List<AForge.Point>();
-                int currentCheck = 35;
+                int currentCheck = 45;
                 while (currentCheck-- > 20 && controlPoints.Count != 4)
                 {
                     controlPoints.Clear();
