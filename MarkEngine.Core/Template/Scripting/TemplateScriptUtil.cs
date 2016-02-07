@@ -139,7 +139,7 @@ namespace OmrMarkEngine.Template.Scripting
                 {
                     errField.SetValue(null, null);
                     runMethod.Invoke(null, new Object[] { processedOutput });
-                    if (errField.GetValue(null) != null)
+                    if (!String.IsNullOrEmpty(errField.GetValue(null) as String))
                         throw new ScriptingErrorException(errField.GetValue(null).ToString());
                 }
             }

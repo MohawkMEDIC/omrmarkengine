@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "OMR Mark Engine"
-#define MyAppVersion "0.8.11"
+#define MyAppVersion "0.8.12"
 #define MyAppPublisher "Fyfe Software Inc."
 #define MyAppURL "http://omrmarkengine.codeplex.com"
 #define MyAppExeName "TemplateDesigner.exe"
