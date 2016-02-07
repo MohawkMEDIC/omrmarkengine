@@ -54,7 +54,7 @@ namespace OmrScannerApplication
         Dictionary<ListViewItem, Image> m_uiResults = new Dictionary<ListViewItem, Image>();
         private WaitThreadPool m_threadPool = new WaitThreadPool();
         private object m_lockObject = new object();
-
+        private Queue<KeyValuePair<OmrTemplate, OmrPageOutput>> m_executionQueue = new Queue<KeyValuePair<OmrTemplate, OmrPageOutput>>();
         
 
         // Auto scan
@@ -226,26 +226,9 @@ namespace OmrScannerApplication
                             lsv.Tag = validation.IsValid ? 2 : 1;
                             if (!validation.IsValid)
                                 lsv.SubItems.Add(validation.Issues[0]);
-                            else
-                            {
-                                // Run script
-                                try
-                                {
-                                    new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(template, pageData);
-                                    lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, this.MakeSummary(pageData)));
-                                }
-                                catch (Exception ex)
-                                {
-                                    lsv.Tag = 1;
-                                    StringBuilder sb = new StringBuilder(ex.Message);
-                                    while (ex.InnerException != null)
-                                    {
-                                        ex = ex.InnerException;
-                                        sb.AppendFormat(": {0}", ex.Message);
-                                    }
-                                    lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, ex.Message));
-                                }
-                            }
+                            lsv.Tag = pageData;
+                            lock(this.m_lockObject)
+                                this.m_executionQueue.Enqueue(new KeyValuePair<OmrTemplate, OmrPageOutput>(template, pageData));
                             lock (this.m_lockObject)
                                 this.m_uiResults.Add(lsv, original);
                         }
@@ -311,6 +294,33 @@ namespace OmrScannerApplication
         /// </summary>
         private void bwUpdate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+
+            // Execute
+            while(this.m_executionQueue.Count > 0)
+            {
+                var data = this.m_executionQueue.Dequeue();
+                var lsv = this.m_uiResults.Keys.FirstOrDefault(o => o.Tag == data.Value);
+
+                // Run script
+                try
+                {
+                    new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(data.Key, data.Value);
+                    lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, this.MakeSummary(data.Value)));
+                    lsv.Tag = 0;
+                }
+                catch (Exception ex)
+                {
+                    lsv.Tag = 1;
+                    StringBuilder sb = new StringBuilder(ex.Message);
+                    while (ex.InnerException != null)
+                    {
+                        ex = ex.InnerException;
+                        sb.AppendFormat(": {0}", ex.Message);
+                    }
+                    lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, ex.Message));
+                }
+
+            }
             
             foreach(var itm in this.m_uiResults)
             {

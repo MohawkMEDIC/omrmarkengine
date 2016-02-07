@@ -121,6 +121,7 @@
             this.Name = "frmAuthenticate";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Authentication";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
