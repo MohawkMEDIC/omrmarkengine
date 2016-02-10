@@ -192,7 +192,7 @@ namespace OmrScannerApplication
                     var pageData = engine.ApplyTemplate(
                         template,
                         scannedImage);
-
+                    
                     // Draw the page data
                     ICanvas canvas = new DesignerCanvas();
                     canvas.Add(new OmrMarkEngine.Output.Design.OutputVisualizationStencil(pageData));
@@ -205,9 +205,20 @@ namespace OmrScannerApplication
                         g.DrawImage(scannedImage.Image, template.TopLeft.X, template.TopLeft.Y, width, height);
                         canvas.DrawTo(g);
                     }
+                    // Save original analyzed image
+                    try
+                    {
+                        String tPath = Path.GetTempFileName();
+                        original.Save(tPath);
+                        pageData.AnalyzedImage = tPath;
+                    }
+                    catch { }
+
                     var oldOriginal = original;
                     original = (Image)new AForge.Imaging.Filters.ResizeNearestNeighbor(scannedImage.Image.Width / 2, scannedImage.Image.Height / 2).Apply((Bitmap)original);
                     oldOriginal.Dispose();
+
+                   
 
                     lock (this.m_lockObject)
                     {
@@ -306,7 +317,7 @@ namespace OmrScannerApplication
                 {
                     new OmrMarkEngine.Template.Scripting.TemplateScriptUtil().Run(data.Key, data.Value);
                     lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, this.MakeSummary(data.Value)));
-                    lsv.Tag = 0;
+                    lsv.Tag = 2;
                 }
                 catch (Exception ex)
                 {
@@ -317,7 +328,10 @@ namespace OmrScannerApplication
                         ex = ex.InnerException;
                         sb.AppendFormat(": {0}", ex.Message);
                     }
-                    lsv.SubItems.Add(new ListViewItem.ListViewSubItem(lsv, ex.Message));
+                    if (lsv.SubItems.Count < 2)
+                        lsv.SubItems.Add("");
+                    
+                    lsv.SubItems[1].Text = ex.Message;
                 }
 
             }
